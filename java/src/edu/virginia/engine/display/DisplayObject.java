@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+
 import javax.imageio.ImageIO;
 
 /**
@@ -35,6 +36,9 @@ public class DisplayObject {
 	/* Describes y axis scaling */
 	private double scaleY;
 
+	private int frameCount;
+
+	private int count;
 	/**
 	 * Constructors: can pass in the id OR the id and image's file path and
 	 * position OR the id and a buffered image and position
@@ -49,6 +53,8 @@ public class DisplayObject {
 		this.oldAlpha = 0.0f;
 		this.scaleX = 1.0;
 		this.scaleY = 1.0;
+		this.frameCount = 30;
+		this.count = 0;
 	}
 
 	public DisplayObject(String id, String fileName) {
@@ -62,6 +68,8 @@ public class DisplayObject {
 		this.oldAlpha = 0.0f;
 		this.scaleX = 1.0;
 		this.scaleY = 1.0;
+		this.frameCount = 30;
+		this.count = 0;
 	}
 
 	/**
@@ -94,6 +102,12 @@ public class DisplayObject {
 	public void setScaleY(double s) {this.scaleY = s;}
 	public double getScaleY() {return scaleY;}
 
+	public void setFrameCount(int fc) {this.frameCount = fc;}
+	public int getFrameCount() {return this.frameCount;}
+
+	public void setCount(int c) {this.count = c;}
+	public int getCount() {return this.count;}
+
 	/**
 	 * Returns the unscaled width and height of this display object
 	 * */
@@ -120,6 +134,7 @@ public class DisplayObject {
 			System.err.println("[DisplayObject.setImage] ERROR: " + imageName + " does not exist!");
 		}
 	}
+
 
 	/**
 	 * Helper function that simply reads an image from the given image name
@@ -200,6 +215,65 @@ public class DisplayObject {
 	 * */
 	protected void reverseTransformations(Graphics2D g2d) {
 		g2d.setComposite(AlphaComposite.getInstance(3, this.oldAlpha));
-	}
+		g2d.scale(1/this.scaleX, 1/this.scaleY);
+		g2d.rotate(Math.toRadians(-this.getRotation()), this.getPivotPoint().x,
+				this.getPivotPoint().y);
+		g2d.translate(-this.position.x, -this.position.y);	}
+
+
+		public void jump(boolean y)
+		{
+			BufferedImage old = this.readImage(this.id+".png");
+			this.setImage("jump.png");
+//*
+			if(y) {
+				this.setPosition(new Point(this.getPosition().x, this.getPosition().y - 3));
+				try
+				{
+					Thread.sleep(2);
+				}
+				catch(InterruptedException e){}
+			}
+			else
+			{
+				this.setPosition(new Point(this.getPosition().x, this.getPosition().y + 3));
+				try
+				{
+					Thread.sleep(2);
+				}
+				catch(InterruptedException e){}
+			}
+			//*/
+			/*
+			for(int i = 0; i < 5; i++)
+			{
+				this.setPosition(new Point(this.getPosition().x, this.getPosition().y-1));
+				try
+				{
+					Thread.sleep(2);
+				}
+				catch(InterruptedException e)
+				{
+					;
+				}
+			}
+
+
+
+			for(int i = 0; i < 5; i++)
+			{
+				this.setPosition(new Point(this.getPosition().x, this.getPosition().y+1));
+				try
+				{
+					Thread.sleep(2);
+				}
+				catch(InterruptedException e)
+				{
+					;
+				}
+			}
+			*/
+
+		}
 
 }
