@@ -121,7 +121,6 @@ public class DisplayObject {
 		}
 	}
 
-
 	/**
 	 * Helper function that simply reads an image from the given image name
 	 * (looks in resources\\) and returns the bufferedimage for that filename
