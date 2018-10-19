@@ -1,20 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="643c3d21-16be-4f36-bdf7-141b60786e9f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/edu/virginia/engine/display/AnimatedSprite.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Computers for Learning.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Computers for Learning/edu/virginia/engine/display/Game$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Computers for Learning/edu/virginia/engine/display/Game.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Computers for Learning/edu/virginia/engine/display/GameScenePanel.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Computers for Learning/edu/virginia/engine/display/Sprite.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Computers for Learning/edu/virginia/engine/util/GameClock.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Computers for Learning/edu/virginia/lab1test/LabOneGame.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/edu/virginia/engine/display/DisplayObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/edu/virginia/engine/display/DisplayObject.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/edu/virginia/lab1test/LabOneGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/edu/virginia/lab1test/LabOneGame.java" afterDir="false" />
-    </list>
+    <list default="true" id="643c3d21-16be-4f36-bdf7-141b60786e9f" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -63,11 +50,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/edu/virginia/engine/display/DisplayObject.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1785">
-              <caret line="60" column="18" selection-start-line="60" selection-start-column="18" selection-end-line="60" selection-end-column="18" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="2465">
+              <caret line="154" column="31" selection-start-line="154" selection-start-column="31" selection-end-line="154" selection-end-column="31" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/edu/virginia/engine/display/GameScenePanel.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="221">
+              <caret line="15" selection-start-line="15" selection-end-line="15" />
             </state>
           </provider>
         </entry>
@@ -75,11 +68,30 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/edu/virginia/engine/display/AnimatedSprite.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="8" column="29" selection-start-line="8" selection-start-column="29" selection-end-line="8" selection-end-column="29" />
+            <state relative-caret-position="-1819">
+              <caret line="28" column="13" selection-start-line="28" selection-start-column="13" selection-end-line="28" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#1978#1979#0" expanded="true" />
+                <element signature="e#2021#2022#0" expanded="true" />
+                <element signature="e#2059#2060#0" expanded="true" />
+                <element signature="e#2101#2102#0" expanded="true" />
+                <element signature="e#2643#2644#0" expanded="true" />
+                <element signature="e#2682#2683#0" expanded="true" />
+                <element signature="e#2747#2748#0" expanded="true" />
+                <element signature="e#2799#2800#0" expanded="true" />
+                <element signature="e#3591#3592#0" expanded="true" />
+                <element signature="e#3637#3638#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/edu/virginia/engine/display/Animation.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="663">
+              <caret line="57" selection-start-line="57" selection-end-line="57" />
             </state>
           </provider>
         </entry>
@@ -96,20 +108,26 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/edu/virginia/engine/display/Game.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
+            <state relative-caret-position="153">
               <caret line="21" column="13" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/edu/virginia/lab1test/LabOneGame.java">
+        <entry file="file://$PROJECT_DIR$/src/edu/virginia/LabTwoGame.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="154">
-              <caret line="76" column="53" lean-forward="true" selection-start-line="76" selection-start-column="53" selection-end-line="76" selection-end-column="53" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="119">
+              <caret line="144" column="47" selection-start-line="144" selection-start-column="47" selection-end-line="144" selection-end-column="47" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/edu/virginia/engine/util/GameClock.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="102">
+              <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -227,8 +245,8 @@
     </option>
   </component>
   <component name="RunManager">
-    <configuration name="LabOneGame" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="edu.virginia.lab1test.LabOneGame" />
+    <configuration name="LabTwoGame" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="edu.virginia.LabTwoGame" />
       <module name="CS209" />
       <extension name="coverage">
         <pattern>
@@ -242,7 +260,7 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.LabOneGame" />
+        <item itemvalue="Application.LabTwoGame" />
       </list>
     </recent_temporary>
   </component>
@@ -261,6 +279,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-6" y="-6" width="1549" height="846" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" weight="0.27095908" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -324,14 +343,14 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/edu/virginia/engine/display/GameScenePanel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-104">
-          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+        <state relative-caret-position="221">
+          <caret line="15" selection-start-line="15" selection-end-line="15" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/edu/virginia/engine/display/Game.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
+        <state relative-caret-position="153">
           <caret line="21" column="13" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
         </state>
       </provider>
@@ -345,21 +364,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/edu/virginia/engine/display/AnimatedSprite.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="29" selection-start-line="8" selection-start-column="29" selection-end-line="8" selection-end-column="29" />
+        <state relative-caret-position="-1819">
+          <caret line="28" column="13" selection-start-line="28" selection-start-column="13" selection-end-line="28" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#1978#1979#0" expanded="true" />
+            <element signature="e#2021#2022#0" expanded="true" />
+            <element signature="e#2059#2060#0" expanded="true" />
+            <element signature="e#2101#2102#0" expanded="true" />
+            <element signature="e#2643#2644#0" expanded="true" />
+            <element signature="e#2682#2683#0" expanded="true" />
+            <element signature="e#2747#2748#0" expanded="true" />
+            <element signature="e#2799#2800#0" expanded="true" />
+            <element signature="e#3591#3592#0" expanded="true" />
+            <element signature="e#3637#3638#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/edu/virginia/engine/display/DisplayObject.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1785">
-          <caret line="60" column="18" selection-start-line="60" selection-start-column="18" selection-end-line="60" selection-end-column="18" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="2465">
+          <caret line="154" column="31" selection-start-line="154" selection-start-column="31" selection-end-line="154" selection-end-column="31" />
         </state>
       </provider>
     </entry>
