@@ -13,7 +13,7 @@ import javax.imageio.ImageIO;
  * A very basic display object for a java based gaming engine
  * 
  * */
-public class DisplayObject {
+public class DisplayObject{
 
 	/* All DisplayObject have a unique id */
 	private String id;
@@ -39,10 +39,28 @@ public class DisplayObject {
 	private int frameCount;
 
 	private int count;
+
+	private DisplayObject parent;
 	/**
 	 * Constructors: can pass in the id OR the id and image's file path and
 	 * position OR the id and a buffered image and position
 	 */
+
+	public DisplayObject()
+	{
+		this.position = new Point(0, 0);
+		this.pivotPoint = new Point(0,0);
+		this.rotation = 0;
+		this.visible = true;
+		this.alpha = 1.0f;
+		this.oldAlpha = 0.0f;
+		this.scaleX = 1.0;
+		this.scaleY = 1.0;
+		this.frameCount = 30;
+		this.count = 0;
+	}
+
+
 	public DisplayObject(String id) {
 		this.setId(id);
 		this.position = new Point(0, 0);
@@ -108,6 +126,17 @@ public class DisplayObject {
 	public void setCount(int c) {this.count = c;}
 	public int getCount() {return this.count;}
 
+
+	public void setParent(DisplayObject x)
+	{
+		this.parent = x;
+	}
+
+	public DisplayObject getParent()
+	{
+		return this.parent;
+	}
+
 	/**
 	 * Returns the unscaled width and height of this display object
 	 * */
@@ -172,6 +201,7 @@ public class DisplayObject {
 	 * draw to the screen differently. This method is automatically invoked on
 	 * every frame.
 	 * */
+
 	public void draw(Graphics g) {
 		
 		if (displayImage != null && visible) {
@@ -187,7 +217,7 @@ public class DisplayObject {
 			g2d.drawImage(displayImage, 0, 0,
 					(int) (getUnscaledWidth()),
 					(int) (getUnscaledHeight()), null);
-			
+
 			/*
 			 * undo the transformations so this doesn't affect other display
 			 * objects
@@ -221,28 +251,24 @@ public class DisplayObject {
 		g2d.translate(-this.position.x, -this.position.y);	}
 
 
-		public void jump(boolean y)
-		{
-			BufferedImage old = this.readImage(this.id+".png");
+		public void jump(boolean y) {
+			BufferedImage old = this.readImage(this.id + ".png");
 			this.setImage("jump.png");
 //*
-			if(y) {
+			if (y) {
 				this.setPosition(new Point(this.getPosition().x, this.getPosition().y - 3));
-				try
-				{
+				try {
 					Thread.sleep(2);
+				} catch (InterruptedException e) {
 				}
-				catch(InterruptedException e){}
-			}
-			else
-			{
+			} else {
 				this.setPosition(new Point(this.getPosition().x, this.getPosition().y + 3));
-				try
-				{
+				try {
 					Thread.sleep(2);
+				} catch (InterruptedException e) {
 				}
-				catch(InterruptedException e){}
 			}
+		}
 			//*/
 			/*
 			for(int i = 0; i < 5; i++)
@@ -274,6 +300,24 @@ public class DisplayObject {
 			}
 			*/
 
+
+
+
+			public Point localToGlobal(Point p){
+			if (parent == null)
+				return p;
+			else
+				return new Point(this.getParent().getPosition().x + this.getParent().localToGlobal(p).x,
+						this.getParent().getPosition().y + this.getParent().localToGlobal(p).y);
 		}
+			public Point globalToLocal(Point p){
+			if (parent == null)
+				return p;
+			else
+				return new Point(this.getParent().getPosition().x - this.getParent().globalToLocal(p).x,
+						this.getParent().getPosition().y - this.getParent().globalToLocal(p).y);
+
+		}
+
 
 }
