@@ -302,7 +302,7 @@ public class DisplayObject{
 
 
 
-
+//*
 			public Point localToGlobal(Point p){
 			if (parent == null)
 				return p;
@@ -318,6 +318,19 @@ public class DisplayObject{
 						this.getParent().getPosition().y - this.getParent().globalToLocal(p).y);
 
 		}
+//*/
+/*
+	public Point localToGlobal(Point p) {
+		DisplayObject temp = null;
+		while (this.parent != null) {
+			temp = this.parent;
+		}
+		return new Point(temp.position.x - p.x, temp.position.y - p.y);
+	}
 
+	public Point globalToLocal(Point p) {
+		return new Point(p.x + this.position.x, p.y + this.position.y);
+	}
+*/
 
 }

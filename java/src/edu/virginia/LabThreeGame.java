@@ -21,6 +21,8 @@ public class LabThreeGame extends Game{
 
     boolean vlast = false;
 
+    int clockwise = 1;
+
 
 
 
@@ -32,15 +34,31 @@ public class LabThreeGame extends Game{
         sun.setScaleX(.25);
         sun.setScaleY(.25);
         sun.setPosition(new Point(600,350));
+        sun.setPivotPoint(sun.getPosition());
         sun.addChild(new Sprite("Earth", "earth2.png"));
+        sun.addChild(new Sprite("Neptune", "neptune2.png"));
+
 
         DisplayObjectContainer earth = (DisplayObjectContainer) sun.getChildren().get(0);
+        earth.setScaleX(.5);
+        earth.setScaleY(.5);
         earth.setPosition(new Point(1500,0));
         earth.addChild(new Sprite("Moon,", "moon.png"));
+        earth.setPivotPoint(earth.globalToLocal(earth.getPosition()));
+
 
         DisplayObjectContainer moon = (DisplayObjectContainer) earth.getChildren().get(0);
-        moon.setPosition(new Point(1000, -100));
-        //sun.getChildren().get(0)
+        moon.setScaleX(.75);
+        moon.setScaleY(.75);
+        moon.setPosition(new Point(1000, 0));
+        moon.setPivotPoint(earth.globalToLocal(earth.getPosition()));
+
+        DisplayObjectContainer neptune = (DisplayObjectContainer) sun.getChildren().get(1);
+        neptune.setScaleX(.5);
+        neptune.setScaleY(.5);
+        neptune.setPosition(new Point(2000,0));
+        neptune.setPivotPoint(sun.globalToLocal(sun.getPosition()));
+
     }
 
     /**
@@ -69,6 +87,11 @@ public class LabThreeGame extends Game{
             }
         }
         */
+
+        DisplayObjectContainer earth = (DisplayObjectContainer) sun.getChildren().get(0);
+        DisplayObjectContainer moon = (DisplayObjectContainer) earth.getChildren().get(0);
+        DisplayObjectContainer neptune = (DisplayObjectContainer) sun.getChildren().get(1);
+
 
         /* Add key press event to update visibility */
         if (pressedKeys.size() == 0 && vlast) { pressedKeys.add(KeyEvent.KEY_PRESSED); }
@@ -119,8 +142,11 @@ public class LabThreeGame extends Game{
                     sun.setScaleY(sun.getScaleY()-0.05);
                 }
             }
-            else {
-                ;
+            else if (pressedKeys.get(counter).equals(KeyEvent.VK_A)){
+                clockwise = -1;
+            }
+            else if (pressedKeys.get(counter).equals(KeyEvent.VK_S)){
+                clockwise = 1;
             }
             /* Check if v was released in order to toggle visibility */
             if (!pressedKeys.contains(KeyEvent.VK_V) && vlast) {
@@ -133,9 +159,18 @@ public class LabThreeGame extends Game{
             }
         }
 
-        DisplayObjectContainer earth = (DisplayObjectContainer) sun.getChildren().get(0);
-        earth.setRotation(earth.getRotation() + 0.1);
-        earth.setPosition(new Point(earth.getPosition().x+1, earth.getPosition().y+1));
+
+        earth.setRotation(earth.getRotation() + clockwise* 0.1);
+
+        //earth.setPosition(new Point(earth.getPosition().x+1, earth.getPosition().y+1));
+        //sun.setPivotPoint(sun.getPosition());
+        //sun.setRotation(sun.getRotation()+.1);
+
+        moon.setRotation(moon.getRotation() + clockwise * 0.2);
+
+        neptune.setRotation(neptune.getRotation()+ clockwise * 0.1);
+
+        //sun.set
         /*
         if(earth.getPosition().x > sun.getPosition().x) {
             if (earth.getPosition().y > sun.getPosition().y)
