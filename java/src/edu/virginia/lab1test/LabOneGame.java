@@ -18,11 +18,13 @@ public class LabOneGame extends Game{
 	/* Create a sprite object for our game. We'll use mario */
 	Sprite mario = new Sprite("Mario", "Mario.png");
 	boolean vlast = false;
+
 	
 	/**
 	 * Constructor. See constructor in Game.java for details on the parameters given
 	 * */
-	public LabOneGame() {
+	public LabOneGame()
+	{
 		super("Lab One Test Game", 500, 300);
 	}
 	

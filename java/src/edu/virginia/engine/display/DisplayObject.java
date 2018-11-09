@@ -1,6 +1,7 @@
 package edu.virginia.engine.display;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -303,21 +304,24 @@ public class DisplayObject{
 
 
 //*
-			public Point localToGlobal(Point p){
-			if (parent == null)
+	public Point localToGlobal(Point p)
+	{
+		if (parent == null)
 				return p;
-			else
-				return new Point(this.getParent().getPosition().x + this.getParent().localToGlobal(p).x,
-						this.getParent().getPosition().y + this.getParent().localToGlobal(p).y);
-		}
-			public Point globalToLocal(Point p){
-			if (parent == null)
-				return p;
-			else
-				return new Point(this.getParent().getPosition().x - this.getParent().globalToLocal(p).x,
-						this.getParent().getPosition().y - this.getParent().globalToLocal(p).y);
+		else
+			return new Point(this.getParent().getPosition().x + this.getParent().localToGlobal(p).x,
+					this.getParent().getPosition().y + this.getParent().localToGlobal(p).y);
+	}
 
-		}
+	public Point globalToLocal(Point p)
+	{
+		if (parent == null)
+			return p;
+		else
+			return new Point(this.getParent().getPosition().x - this.getParent().globalToLocal(p).x,
+					this.getParent().getPosition().y - this.getParent().globalToLocal(p).y);
+
+	}
 //*/
 /*
 	public Point localToGlobal(Point p) {
@@ -332,5 +336,17 @@ public class DisplayObject{
 		return new Point(p.x + this.position.x, p.y + this.position.y);
 	}
 */
+
+	//*
+	public Shape getHitbox(DisplayObject x)
+	{
+		AffineTransform tx = new AffineTransform();
+		tx.rotate(x.getRotation());
+		Rectangle hit = new Rectangle((int)Math.round(x.getUnscaledHeight()*x.scaleY), (int)Math.round(x.getUnscaledWidth()*x.scaleX),
+				(int)x.getPosition().getX(), (int)x.getPosition().getY());
+		Shape box = tx.createTransformedShape(hit);
+		return box;
+	}
+	//*/
 
 }
