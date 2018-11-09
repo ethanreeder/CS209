@@ -2,6 +2,7 @@ package edu.virginia.engine.display;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -18,10 +19,14 @@ public class DisplayObject{
 
 	/* All DisplayObject have a unique id */
 	private String id;
+	/* Describes last position for collision resolution */
+	private Point oldPosition;
 	/* Describes x, y position where object is drawn */
 	private Point position;
 	/* Point relative to UI upper left corner around which object rotates*/
 	private Point pivotPoint;
+	/* Defines last rotation for collision resolution */
+	private double oldRotation;
 	/* Defines amount to rotate object */
 	private double rotation;
 	/* The image that is displayed by this object */
@@ -36,12 +41,19 @@ public class DisplayObject{
 	private double scaleX;
 	/* Describes y axis scaling */
 	private double scaleY;
+	/* Describes last x axis scaling for collision resolution*/
+	private double oldScaleX;
+	/* Describes last y axis scaling for collision resolution*/
+	private double oldScaleY;
 
 	private int frameCount;
 
 	private int count;
 
 	private DisplayObject parent;
+
+	private Shape hitbox;
+
 	/**
 	 * Constructors: can pass in the id OR the id and image's file path and
 	 * position OR the id and a buffered image and position
@@ -100,11 +112,17 @@ public class DisplayObject{
 	public void setPosition(Point pos) {this.position = pos;}
 	public Point getPosition() {return position;}
 
+	public void setOldPosition(Point pos) {this.oldPosition = pos;}
+	public Point getOldPosition() {return oldPosition;}
+
 	public void setPivotPoint(Point pp) {this.pivotPoint = pp;}
 	public Point getPivotPoint() {return pivotPoint;}
 
 	public void setRotation(double r) {this.rotation = r;}
 	public double getRotation() {return rotation;}
+
+	public void setOldRotation(double r) {this.oldRotation = r;}
+	public double getOldRotation() {return oldRotation;}
 
 	public void setVisible(boolean v) {this.visible = v;}
 	public boolean getVisible() {return visible;}
@@ -120,6 +138,12 @@ public class DisplayObject{
 
 	public void setScaleY(double s) {this.scaleY = s;}
 	public double getScaleY() {return scaleY;}
+
+	public void setOldScaleX(double s) {this.oldScaleX = s;}
+	public double getOldScaleX() {return oldScaleX;}
+
+	public void setOldScaleY(double s) {this.oldScaleY = s;}
+	public double getOldScaleY() {return oldScaleY;}
 
 	public void setFrameCount(int fc) {this.frameCount = fc;}
 	public int getFrameCount() {return this.frameCount;}
@@ -232,8 +256,12 @@ public class DisplayObject{
 	 * object
 	 * */
 	protected void applyTransformations(Graphics2D g2d) {
+		this.oldPosition = this.position;
 		g2d.translate(this.position.x, this.position.y);
+		this.oldRotation = this.rotation;
 		g2d.rotate(Math.toRadians(this.getRotation()), this.pivotPoint.x, this.pivotPoint.y);
+		this.oldScaleX = this.scaleX;
+		this.oldScaleY = this.scaleY;
 		g2d.scale(this.scaleX, this.scaleY);
 		float curAlpha;
 		this.oldAlpha = curAlpha = ((AlphaComposite)g2d.getComposite()).getAlpha();
@@ -304,24 +332,21 @@ public class DisplayObject{
 
 
 //*
-	public Point localToGlobal(Point p)
-	{
-		if (parent == null)
+			public Point localToGlobal(Point p){
+			if (parent == null)
 				return p;
-		else
-			return new Point(this.getParent().getPosition().x + this.getParent().localToGlobal(p).x,
-					this.getParent().getPosition().y + this.getParent().localToGlobal(p).y);
-	}
+			else
+				return new Point(this.getParent().getPosition().x + this.getParent().localToGlobal(p).x,
+						this.getParent().getPosition().y + this.getParent().localToGlobal(p).y);
+		}
+			public Point globalToLocal(Point p){
+			if (parent == null)
+				return p;
+			else
+				return new Point(this.getParent().getPosition().x - this.getParent().globalToLocal(p).x,
+						this.getParent().getPosition().y - this.getParent().globalToLocal(p).y);
 
-	public Point globalToLocal(Point p)
-	{
-		if (parent == null)
-			return p;
-		else
-			return new Point(this.getParent().getPosition().x - this.getParent().globalToLocal(p).x,
-					this.getParent().getPosition().y - this.getParent().globalToLocal(p).y);
-
-	}
+		}
 //*/
 /*
 	public Point localToGlobal(Point p) {
@@ -337,16 +362,24 @@ public class DisplayObject{
 	}
 */
 
-	//*
-	public Shape getHitbox(DisplayObject x)
-	{
-		AffineTransform tx = new AffineTransform();
-		tx.rotate(x.getRotation());
-		Rectangle hit = new Rectangle((int)Math.round(x.getUnscaledHeight()*x.scaleY), (int)Math.round(x.getUnscaledWidth()*x.scaleX),
-				(int)x.getPosition().getX(), (int)x.getPosition().getY());
-		Shape box = tx.createTransformedShape(hit);
-		return box;
+	public Shape getHitbox() {
+		return this.hitbox;
 	}
-	//*/
+
+	public void updateHitbox() {
+		Rectangle r = new Rectangle((int)(Math.round(this.getPosition().x)),
+									 (int)(Math.round(this.getPosition().y)),
+									 (int)(Math.round(this.getUnscaledWidth() * this.getScaleX())),
+									 (int)(Math.round(this.getUnscaledHeight() * this.getScaleY())));
+		AffineTransform at = new AffineTransform();
+		at.rotate(Math.toRadians(this.getRotation()), this.getPivotPoint().x + this.getPosition().x, this.getPivotPoint().y + this.getPosition().y);
+		Shape newShape = at.createTransformedShape(r);
+		this.hitbox = newShape;
+	}
+
+	public boolean collidesWith(DisplayObject other) {
+		Shape s = other.getHitbox();
+		return this.getHitbox().intersects(s.getBounds2D());
+	}
 
 }

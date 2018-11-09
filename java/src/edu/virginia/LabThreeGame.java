@@ -22,9 +22,7 @@ public class LabThreeGame extends Game{
     boolean vlast = false;
 
     int clockwise = 1;
-
-
-
+    int scalar = 1;
 
     /**
      * Constructor. See constructor in Game.java for details on the parameters given

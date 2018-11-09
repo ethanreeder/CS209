@@ -5,8 +5,10 @@ import edu.virginia.engine.display.Animation;
 import edu.virginia.engine.display.Game;
 import edu.virginia.engine.display.SoundManager;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
 
@@ -18,8 +20,20 @@ public class LabFourGame extends Game{
 
     /* Create a sprite object for our game. We'll use mario */
     AnimatedSprite mario = new AnimatedSprite("Mario", "Mario.png", new Point(0,0));
-    boolean vlast = false;
+    AnimatedSprite brick1 = new AnimatedSprite("Brick1", "brick.png", new Point(200,0));
+    AnimatedSprite brick2 = new AnimatedSprite("Brick2", "brick.png", new Point(0,800));
+    AnimatedSprite brick3 = new AnimatedSprite("Brick3", "brick.png", new Point(1200,200));
+    AnimatedSprite brick4 = new AnimatedSprite("Brick4", "brick.png", new Point(800,1000));
+    AnimatedSprite brick5 = new AnimatedSprite("Brick5", "brick.png", new Point(1600,1000));
+    AnimatedSprite brick6 = new AnimatedSprite("Brick6", "brick.png", new Point(2200,200));
+    AnimatedSprite star = new AnimatedSprite("Star", "star1.png", new Point(2040,40));
 
+
+    int score = 0;
+    boolean vlast = false;
+    boolean collisionlast = false;
+    boolean success = false;
+    int acceleration = 0;
 
     private void initFrames()
     {
@@ -52,7 +66,9 @@ public class LabFourGame extends Game{
      * Constructor. See constructor in Game.java for details on the parameters given
      * */
     public LabFourGame() {
-        super("Lab Four Game", 500, 300);
+        super("Lab Four Game", 2500, 2000);
+        star.setScaleX(getScaleX() * 0.125);
+        star.setScaleY(getScaleY() * 0.125);
     }
 
     /**
@@ -63,24 +79,17 @@ public class LabFourGame extends Game{
     public void update(ArrayList<Integer> pressedKeys){
         super.update(pressedKeys);
 
+        if (success) {
+            try {
+                Thread.sleep(4000);
+            } catch(InterruptedException e) {
+                System.out.println("Interrupted.");
+            }
+            System.exit(0);
+        }
+
         /* Make sure mario is not null. Sometimes Swing can auto cause an extra frame to go before everything is initialized */
         if(mario != null) mario.update(pressedKeys);
-
-        /*
-        if (mario.getCount() < 30) {
-            mario.setCount(mario.getCount() + 1);
-        }
-        */
-
-        /*
-        if (!mario.getPaused()) {
-            if (mario.getFrameCount() < mario.getAnimationSpeed()) {
-                mario.setFrameCount(mario.getFrameCount() + 1);
-            } else if (mario.getFrameCount() > mario.getAnimationSpeed()) {
-                mario.setFrameCount(0);
-            }
-        }
-        */
 
         /* Add key press event to update visibility */
         if (pressedKeys.size() == 0 && vlast) { pressedKeys.add(KeyEvent.KEY_PRESSED); }
@@ -148,18 +157,14 @@ public class LabFourGame extends Game{
                 //mario.animate("jump");
                 mario.jump(true);
                 mario.setCount(mario.getCount()+1);
+                SoundManager s = new SoundManager("jump");
 
                 for(int i = 0; i < 2; i++)
                     pressedKeys.add(1);
 
-                SoundManager s = new SoundManager("jump");
-                //s.LoadSoundEffect("jump", "jump.wav");
-                //s.PlaySoundEffect("jump");
 
-            } else if(pressedKeys.get(counter).equals(1))
-            {
+            } else if(pressedKeys.get(counter).equals(1)) {
                 //mario.jump(false);
-
                 if(mario.getCount() >= 500) {
                     mario.setCount(0);
                     //mario.jump(false);
@@ -168,11 +173,8 @@ public class LabFourGame extends Game{
                 else
                     mario.setCount(mario.getCount()+1);
             }
-
-
-
             else {
-                ;
+                acceleration = 0;
             }
             /* Check if v was released in order to toggle visibility */
             if (!pressedKeys.contains(KeyEvent.VK_V) && vlast) {
@@ -183,7 +185,48 @@ public class LabFourGame extends Game{
                 }
                 vlast = false;
             }
+
+            if (mario.collidesWith(brick1)
+                    || mario.collidesWith(brick2)
+                    || mario.collidesWith(brick3)
+                    || mario.collidesWith(brick4)
+                    || mario.collidesWith(brick5)
+                    || mario.collidesWith(brick6)) {
+                if (!collisionlast) {
+                    SoundManager s = new SoundManager("bump");
+                    score = score - 10;
+                }
+                collisionlast = true;
+            } else {
+                collisionlast = false;
+            }
+
+            if (mario.collidesWith(star)) {
+                score = score + 10000;
+                SoundManager s = new SoundManager("win");
+                success = true;
+            }
+
+            /*
+            if (mario.collidesWith(brick) {
+                mario.setPosition(mario.getOldPosition());
+                mario.setRotation(mario.getOldRotation());
+                mario.setScaleX(mario.getOldScaleX());
+                mario.setScaleY(mario.getOldScaleY());
+            }
+            */
         }
+
+
+        mario.updateHitbox();
+        brick1.updateHitbox();
+        brick2.updateHitbox();
+        brick3.updateHitbox();
+        brick4.updateHitbox();
+        brick5.updateHitbox();
+        brick6.updateHitbox();
+        star.updateHitbox();
+
     }
 
 
@@ -198,6 +241,30 @@ public class LabFourGame extends Game{
 
         /* Same, just check for null in case a frame gets thrown in before Mario is initialized */
         if(mario != null) mario.draw(g);
+        Graphics2D g2d = (Graphics2D) g;
+        //g2d.draw(mario.getHitbox());
+        if(brick1 != null) brick1.draw(g);
+        //g2d.draw(brick1.getHitbox());
+        if(brick2 != null) brick2.draw(g);
+        //g2d.draw(brick2.getHitbox());
+        if(brick3 != null) brick3.draw(g);
+        //g2d.draw(brick3.getHitbox());
+        if(brick4 != null) brick4.draw(g);
+        //g2d.draw(brick4.getHitbox());
+        if(brick5 != null) brick5.draw(g);
+        //g2d.draw(brick5.getHitbox());
+        if(brick6 != null) brick6.draw(g);
+        //g2d.draw(brick6.getHitbox());
+        if(star != null) star.draw(g);
+        //g2d.draw(star.getHitbox());
+        if (mario.collidesWith(star)) {
+            g2d.setFont(new Font("Times New Roman", Font.PLAIN, 100));
+            g2d.drawString("# YOU WIN #", 810, 900);
+            g2d.drawString("Score = " + Integer.toString(score), 810, 985);
+        } else {
+            g2d.setFont(new Font("Times New Roman", Font.PLAIN, 50));
+            g2d.drawString("Score = " + Integer.toString(score), 10, 1800);
+        }
     }
 
     /**
@@ -206,13 +273,15 @@ public class LabFourGame extends Game{
      * */
     public static void main(String[] args) {
         LabFourGame game = new LabFourGame();
-        //game.initFrames();
-        //game.initAnimations();
+        game.initFrames();
+        game.initAnimations();
         game.start();
         SoundManager s1 = new SoundManager("readygo");
+        try {
+            Thread.sleep(2000);
+        } catch(InterruptedException e) {
+            System.out.println("Interrupted.");
+        }
         SoundManager s2 = new SoundManager("marioMusic");
-
-
-
     }
 }
