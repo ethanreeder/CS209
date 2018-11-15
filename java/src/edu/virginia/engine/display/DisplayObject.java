@@ -25,8 +25,10 @@ public class DisplayObject {
 	private Point oldOldPosition;
 	/* Describes x, y position where object is drawn */
 	private Point position;
-	/* Describes linear movement speed of the object*/
-	private float velocity;
+	/* Describes linear movement speed of the object on X axis*/
+	private float velocityX;
+    /* Describes linear movement speed of the object on Y axis*/
+    private float velocityY;
 	/* Describes acceleration on positive X axis movement */
 	private float accelerationXN;
 	/* Describes acceleration on positive X axis movement */
@@ -78,6 +80,8 @@ public class DisplayObject {
 	public DisplayObject()
 	{
 		this.position = new Point(0, 0);
+        this.velocityX = 0.0f;
+        this.velocityY = 0.0f;
 		this.accelerationXP = 1.0f;
 		this.accelerationXN = 1.0f;
 		this.accelerationYP = 1.0f;
@@ -97,6 +101,8 @@ public class DisplayObject {
 	public DisplayObject(String id) {
 		this.setId(id);
 		this.position = new Point(0, 0);
+		this.velocityX = 0.0f;
+        this.velocityY = 0.0f;
 		this.accelerationXP = 1.0f;
 		this.accelerationXN = 1.0f;
 		this.accelerationYP = 1.0f;
@@ -116,6 +122,8 @@ public class DisplayObject {
 		this.setId(id);
 		this.setImage(fileName);
 		this.position = new Point(0, 0);
+        this.velocityX = 0.0f;
+        this.velocityY = 0.0f;
 		this.accelerationXP = 1.0f;
 		this.accelerationXN = 1.0f;
 		this.accelerationYP = 1.0f;
@@ -146,8 +154,11 @@ public class DisplayObject {
 	public void setOldOldPosition(Point pos) {this.oldOldPosition = pos;}
 	public Point getOldOldPosition() {return oldOldPosition;}
 
-	public void setVelocity(float a) {this.velocity = a;}
-	public float getVelocity() {return velocity;}
+	public void setVelocityX(float a) {this.velocityX = a;}
+	public float getVelocityX() {return velocityY;}
+
+    public void setVelocityY(float a) {this.velocityX = a;}
+    public float getVelocityY() {return velocityY;}
 
 	public void setAccelerationXP(float a) {this.accelerationXP = a;}
 	public float getAccelerationXP() {return accelerationXP;}
@@ -360,40 +371,7 @@ public class DisplayObject {
 				}
 			}
 		}
-			//*/
-			/*
-			for(int i = 0; i < 5; i++)
-			{
-				this.setPosition(new Point(this.getPosition().x, this.getPosition().y-1));
-				try
-				{
-					Thread.sleep(2);
-				}
-				catch(InterruptedException e)
-				{
-					;
-				}
-			}
 
-
-
-			for(int i = 0; i < 5; i++)
-			{
-				this.setPosition(new Point(this.getPosition().x, this.getPosition().y+1));
-				try
-				{
-					Thread.sleep(2);
-				}
-				catch(InterruptedException e)
-				{
-					;
-				}
-			}
-			*/
-
-
-
-//*
 			public Point localToGlobal(Point p){
 			if (parent == null)
 				return p;
@@ -409,7 +387,6 @@ public class DisplayObject {
 						this.getParent().getPosition().y - this.getParent().globalToLocal(p).y);
 
 		}
-//*/
 /*
 	public Point localToGlobal(Point p) {
 		DisplayObject temp = null;
@@ -468,13 +445,14 @@ public class DisplayObject {
 		}
 	}
 
-	public boolean tryMove(int xChange, int yChange, ArrayList<DisplayObject> objList) {
-		boolean noNewCollision = true;
+	public ArrayList<DisplayObject> tryMove(int xChange, int yChange, ArrayList<DisplayObject> objList) {
+		ArrayList<DisplayObject> collisions = new ArrayList<DisplayObject>();
 		Point holdPosition = this.getPosition();
-		if (this.collidesWithAny(objList) != null) {
+		if (!this.collidesWithAny(objList).isEmpty()) {
 			this.setPosition(new Point(this.getPosition().x + xChange, this.getPosition().y + yChange));
 			this.updateHitbox();
-			if (!this.collidesWithAny(objList).isEmpty()) { // Collides with any
+            collisions = this.collidesWithAny(objList);
+			if (!collisions.isEmpty()) {
 				this.setPosition(holdPosition);
 				this.updateHitbox();
 			} else {
@@ -483,16 +461,15 @@ public class DisplayObject {
 		} else {
 			this.setPosition(new Point(this.getPosition().x + xChange, this.getPosition().y + yChange));
 			this.updateHitbox();
-			if (!this.collidesWithAny(objList).isEmpty()) { // Collides with any
+			collisions = this.collidesWithAny(objList);
+			if (!collisions.isEmpty()) {
 				this.setPosition(new Point(holdPosition));
 				this.updateHitbox();
-				noNewCollision = false;
 			} else {
 				;
 			}
-
 		}
-		return noNewCollision;
+		return collisions;
 	}
 
 }
