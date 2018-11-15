@@ -15,7 +15,7 @@ import javax.imageio.ImageIO;
  * A very basic display object for a java based gaming engine
  * 
  * */
-public class DisplayObject{
+public class DisplayObject {
 
 	/* All DisplayObject have a unique id */
 	private String id;
@@ -65,6 +65,10 @@ public class DisplayObject{
 	private DisplayObject parent;
 
 	private Shape hitbox;
+
+	private boolean physics;
+
+	private float gravity = 0.0f;
 
 	/**
 	 * Constructors: can pass in the id OR the id and image's file path and
@@ -198,10 +202,27 @@ public class DisplayObject{
 	{
 		this.parent = x;
 	}
-
 	public DisplayObject getParent()
 	{
 		return this.parent;
+	}
+
+	public void setGravity(float f)
+	{
+		this.gravity = f;
+	}
+	public float getGravity()
+	{
+		return this.gravity;
+	}
+
+	public void setPhysics(boolean b)
+	{
+		this.physics = b;
+	}
+	public boolean getPhysics()
+	{
+		return this.physics;
 	}
 
 	/**
@@ -423,14 +444,55 @@ public class DisplayObject{
 		return this.getHitbox().intersects(s.getBounds2D());
 	}
 
-	public boolean collidesWithAny(ArrayList<DisplayObject> otherlist) {
-		for (int counter = 0; counter < otherlist.size(); counter++) {
-			DisplayObject curr = otherlist.get(counter);
-			if (curr != null) {
-				if (this.collidesWith(curr)) {return true;}
+	public ArrayList<DisplayObject> collidesWithAny(ArrayList<DisplayObject> objList) {
+		ArrayList<DisplayObject> collisions = new ArrayList<DisplayObject>();
+		for (DisplayObject obj : objList) {
+			if (obj != null && this != obj) {
+				if (this.collidesWith(obj)) {collisions.add(obj);}
 			}
 		}
-		return false;
+		return collisions;
+	}
+
+	public void doGravity(ArrayList<DisplayObject> objList) {
+		if (!this.getPhysics()) return;
+		Point holdPosition = this.getPosition();
+		this.setPosition(new Point(this.getPosition().x, Math.round(this.getPosition().y+this.getGravity())));
+		this.updateHitbox();
+		if (!this.collidesWithAny(objList).isEmpty()) {
+			this.setPosition(holdPosition);
+			this.updateHitbox();
+			this.setGravity(0.0f);
+		} else {
+			this.setGravity(this.getGravity() + 0.5f);
+		}
+	}
+
+	public boolean tryMove(int xChange, int yChange, ArrayList<DisplayObject> objList) {
+		boolean noNewCollision = true;
+		Point holdPosition = this.getPosition();
+		if (this.collidesWithAny(objList) != null) {
+			this.setPosition(new Point(this.getPosition().x + xChange, this.getPosition().y + yChange));
+			this.updateHitbox();
+			if (!this.collidesWithAny(objList).isEmpty()) { // Collides with any
+				this.setPosition(holdPosition);
+				this.updateHitbox();
+			} else {
+				;
+			}
+		} else {
+			this.setPosition(new Point(this.getPosition().x + xChange, this.getPosition().y + yChange));
+			this.updateHitbox();
+			if (!this.collidesWithAny(objList).isEmpty()) { // Collides with any
+				this.setPosition(new Point(holdPosition));
+				this.updateHitbox();
+				noNewCollision = false;
+			} else {
+				;
+			}
+
+		}
+		return noNewCollision;
 	}
 
 }

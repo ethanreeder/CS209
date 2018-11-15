@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 
@@ -17,14 +18,16 @@ public class LabFiveGame extends Game{
 
     AnimatedSprite mario = new AnimatedSprite("Mario", "Mario.png", new Point(0,0));
     AnimatedSprite star = new AnimatedSprite("Star", "star1.png", new Point(2040,40));
-
     AnimatedSprite brick1 = new AnimatedSprite("Brick", "brick.png", new Point(0, 400));
+    AnimatedSprite brick2 = new AnimatedSprite("Brick4", "brick.png", new Point(0,400));
+    AnimatedSprite brick3 = new AnimatedSprite("Brick4", "brick.png", new Point(400,400));
+    AnimatedSprite brick4 = new AnimatedSprite("Brick4", "brick.png", new Point(800,400));
+    AnimatedSprite ball = new AnimatedSprite("Ball", "ball1.png", new Point(200, 200));
 
     int score = 0;
     boolean vlast = false;
     boolean collisionlast = false;
     boolean success = false;
-    float gravity = 0.0f;
 
     private void initFrames()
     {
@@ -58,8 +61,12 @@ public class LabFiveGame extends Game{
      * */
     public LabFiveGame() {
         super("Lab Five Game", 2500, 2000);
+        mario.setPhysics(true);
         star.setScaleX(getScaleX() * 0.125);
         star.setScaleY(getScaleY() * 0.125);
+        ball.setPhysics(true);
+        ball.setScaleX(getScaleX() * 0.125);
+        ball.setScaleY(getScaleY() * 0.125);
     }
 
     /**
@@ -74,17 +81,18 @@ public class LabFiveGame extends Game{
         if(mario != null) mario.update(pressedKeys);
 
         Point holdPosition;
+        ArrayList<DisplayObject> gameObjects = new ArrayList<DisplayObject>();
+        gameObjects.add(brick1);
+        gameObjects.add(brick2);
+        gameObjects.add(brick3);
+        gameObjects.add(brick4);
+        gameObjects.add(ball);
 
         mario.updateHitbox();
         star.updateHitbox();
-        brick1.updateHitbox();
-        /*
-        for (int counter = 0; counter < this.getGameObjects().size(); counter++) {
-            DisplayObject curr = this.getGameObjects().get(counter);
-            if (curr != null) {
-                curr.updateHitbox();
-            }
-        }*/
+        for (DisplayObject gameObject : gameObjects) {
+            gameObject.updateHitbox();
+        }
 
         if (success) {
             try {
@@ -95,16 +103,20 @@ public class LabFiveGame extends Game{
             System.exit(0);
         }
 
+        /*
         holdPosition = mario.getPosition();
-        mario.setPosition(new Point(mario.getPosition().x, Math.round(mario.getPosition().y+gravity)));
+        mario.setPosition(new Point(mario.getPosition().x, Math.round(mario.getPosition().y+mario.getGravity())));
         mario.updateHitbox();
         if (mario.collidesWith(brick1)) { // Collides with any
             mario.setPosition(holdPosition);
             mario.updateHitbox();
-            gravity = 0.0f;
+            mario.setGravity(0.0f);
         } else {
-            gravity += 0.5f;
-        }
+            mario.setGravity(mario.getGravity() + 0.5f);
+        }*/
+
+        mario.doGravity(gameObjects);
+        ball.doGravity(gameObjects);
 
         /* Add key press event to update visibility */
         if (pressedKeys.size() == 0 && vlast) { pressedKeys.add(KeyEvent.KEY_PRESSED); }
@@ -113,110 +125,35 @@ public class LabFiveGame extends Game{
 
             /* Logic for Up Arrowkey Press */
             if (pressedKeys.get(counter).equals(KeyEvent.VK_UP)) {
-                holdPosition = mario.getPosition();
-                if (mario.collidesWith(brick1)) { // Collides with any
-                    mario.setPosition(new Point(mario.getPosition().x, Math.round(mario.getPosition().y-(5 * mario.getAccelerationYN()))));
-                    mario.updateHitbox();
-                    if (mario.collidesWith(brick1)) { // Collides with any
-                        mario.setPosition(holdPosition);
-                        mario.updateHitbox();
-                    } else {
-                        ;
-                    }
+                if (mario.tryMove(0, Math.round(-5 * mario.getAccelerationYN()), gameObjects)) {
+                    collisionlast = true;
                 } else {
-                    mario.setPosition(new Point(mario.getPosition().x, Math.round(mario.getPosition().y-(5 * mario.getAccelerationYN()))));
-                    mario.updateHitbox();
-                    if (mario.collidesWith(brick1)) { // Collides with any
-                        mario.setPosition(new Point(holdPosition));
-                        mario.updateHitbox();
-                        mario.setAccelerationYN(1.0f);
-                        collisionlast = true;
-                    } else {
-                        ;
-                    }
+                    mario.setAccelerationYN(1.0f);
                 }
-            } else {
-                ;
             }
             /* Logic for Down Arrowkey Press */
             if (pressedKeys.get(counter).equals(KeyEvent.VK_DOWN)) {
-                holdPosition = mario.getPosition();
-                if (mario.collidesWith(brick1)) { // Collides with any
-                    mario.setPosition(new Point(mario.getPosition().x, Math.round(mario.getPosition().y+(5 * mario.getAccelerationYP()))));
-                    mario.updateHitbox();
-                    if (mario.collidesWith(brick1)) { // Collides with any
-                        mario.setPosition(holdPosition);
-                        mario.updateHitbox();
-                    } else {
-                        ;
-                    }
+                if (mario.tryMove(0, Math.round(5 * mario.getAccelerationYP()), gameObjects)) {
+                    collisionlast = true;
                 } else {
-                    mario.setPosition(new Point(mario.getPosition().x, Math.round(mario.getPosition().y+(5 * mario.getAccelerationYP()))));
-                    mario.updateHitbox();
-                    if (mario.collidesWith(brick1)) { // Collides with any
-                        mario.setPosition(new Point(holdPosition));
-                        mario.updateHitbox();
-                        mario.setAccelerationYP(1.0f);
-                        collisionlast = true;
-                    } else {
-                        ;
-                    }
+                    mario.setAccelerationYP(1.0f);
                 }
-            } else {
-                mario.setAccelerationYP(1.0f);
             }
             /* Logic for Left Arrowkey Press */
             if (pressedKeys.get(counter).equals(KeyEvent.VK_LEFT)) {
-                holdPosition = mario.getPosition();
-                if (mario.collidesWith(brick1)) { // Collides with any
-                    mario.setPosition(new Point(Math.round(mario.getPosition().x-(5 * mario.getAccelerationXN())), mario.getPosition().y));
-                    mario.updateHitbox();
-                    if (mario.collidesWith(brick1)) { // Collides with any
-                        mario.setPosition(holdPosition);
-                        mario.updateHitbox();
-                    } else {
-                        ;
-                    }
+                if (mario.tryMove(Math.round(-5 * mario.getAccelerationXN()), 0, gameObjects)) {
+                    collisionlast = true;
                 } else {
-                    mario.setPosition(new Point(Math.round(mario.getPosition().x-(5 * mario.getAccelerationXN())), mario.getPosition().y));
-                    mario.updateHitbox();
-                    if (mario.collidesWith(brick1)) { // Collides with any
-                        mario.setPosition(new Point(holdPosition));
-                        mario.updateHitbox();
-                        mario.setAccelerationXN(1.0f);
-                        collisionlast = true;
-                    } else {
-                        ;
-                    }
+                    mario.setAccelerationXN(1.0f);
                 }
-            } else {
-                mario.setAccelerationXN(1.0f);
             }
             /* Logic for Right Arrowkey Press */
             if (pressedKeys.get(counter).equals(KeyEvent.VK_RIGHT)) {
-                holdPosition = mario.getPosition();
-                if (mario.collidesWith(brick1)) { // Collides with any
-                    mario.setPosition(new Point(Math.round(mario.getPosition().x+(5 * mario.getAccelerationXP())), mario.getPosition().y));
-                    mario.updateHitbox();
-                    if (mario.collidesWith(brick1)) { // Collides with any
-                        mario.setPosition(holdPosition);
-                    } else {
-                        ;
-                    }
+                if (mario.tryMove(Math.round(5 * mario.getAccelerationXP()), 0, gameObjects)) {
+                    collisionlast = true;
                 } else {
-                    mario.setPosition(new Point(Math.round(mario.getPosition().x+(5 * mario.getAccelerationXP())), mario.getPosition().y));
-                    mario.updateHitbox();
-                    if (mario.collidesWith(brick1)) { // Collides with any
-                        mario.setPosition(holdPosition);
-                        mario.updateHitbox();
-                        mario.setAccelerationXP(1.0f);
-                        collisionlast = true;
-                    } else {
-                        ;
-                    }
+                    mario.setAccelerationXP(1.0f);
                 }
-            } else {
-                mario.setAccelerationXP(1.0f);
             }
 
             /* Key events which alter pivot point */
@@ -273,7 +210,6 @@ public class LabFiveGame extends Game{
                 mario.jump(true);
                 mario.setCount(mario.getCount()+1);
                 SoundManager s = new SoundManager("jump");
-
                 for(int i = 0; i < 2; i++)
                     pressedKeys.add(1);
             } else if(pressedKeys.get(counter).equals(1)) {
@@ -335,7 +271,9 @@ public class LabFiveGame extends Game{
 
         mario.updateHitbox();
         star.updateHitbox();
+        ball.updateHitbox();
         brick1.updateHitbox();
+
         /*
         for (int counter = 0; counter < this.getGameObjects().size(); counter++) {
             DisplayObject curr = this.getGameObjects().get(counter);
@@ -360,19 +298,22 @@ public class LabFiveGame extends Game{
         if(mario != null) mario.draw(g);
         g2d.draw(mario.getHitbox());
 
-        /*
-        for (int counter = 0; counter < this.getGameObjects().size(); counter++) {
-            DisplayObject curr = this.getGameObjects().get(counter);
-            if (curr != null) {
-                curr.draw(g);
-                g2d.draw(curr.getHitbox());
-            }
-        }*/
+        ArrayList<DisplayObject> gameObjects = new ArrayList<DisplayObject>();
+        gameObjects.add(brick1);
+        gameObjects.add(brick2);
+        gameObjects.add(brick3);
+        gameObjects.add(brick4);
+        gameObjects.add(ball);
+
+        mario.updateHitbox();
+        star.updateHitbox();
+        for (DisplayObject gameObject : gameObjects) {
+            gameObject.draw(g);
+            g2d.draw(gameObject.getHitbox());
+        }
 
         if(star != null) star.draw(g);
         g2d.draw(star.getHitbox());
-        if(brick1 != null) brick1.draw(g);
-        g2d.draw(brick1.getHitbox());
 
         if (mario.collidesWith(star)) {
             g2d.setFont(new Font("Times New Roman", Font.PLAIN, 100));
@@ -392,15 +333,6 @@ public class LabFiveGame extends Game{
         LabFiveGame game = new LabFiveGame();
         game.initFrames();
         game.initAnimations();
-
-        /*
-        AnimatedSprite brick2 = new AnimatedSprite("Brick4", "brick.png", new Point(0,400));
-        game.addGameObject(brick2);
-        AnimatedSprite brick3 = new AnimatedSprite("Brick4", "brick.png", new Point(400,400));
-        game.addGameObject(brick3);
-        AnimatedSprite brick4 = new AnimatedSprite("Brick4", "brick.png", new Point(800,400));
-        game.addGameObject(brick4);
-        */
         game.start();
         SoundManager s1 = new SoundManager("readygo");
         try {
