@@ -33,6 +33,17 @@ public class Game extends DisplayObjectContainer implements ActionListener, KeyL
 	/* The JPanel for this game */
 	private GameScenePanel scenePanel;
 
+	/* A list of the NPC objects in the game */
+	private ArrayList<DisplayObject> gameObjects;
+
+	public void setGameObjects(ArrayList<DisplayObject> go) {this.gameObjects = go;}
+	public ArrayList<DisplayObject> getGameObjects() {return gameObjects;}
+
+	public void addGameObject(DisplayObject go)
+	{
+		this.gameObjects.add(go);
+	}
+
 	public Game(String gameId, int width, int height) {
 		super(gameId);
 		

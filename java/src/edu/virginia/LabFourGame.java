@@ -34,6 +34,7 @@ public class LabFourGame extends Game{
     boolean collisionlast = false;
     boolean success = false;
     int acceleration = 0;
+    Point holdPosition = new Point(0, 0);
 
     private void initFrames()
     {
@@ -77,6 +78,9 @@ public class LabFourGame extends Game{
      * */
     @Override
     public void update(ArrayList<Integer> pressedKeys){
+
+        Point holdPosition = mario.getPosition();
+
         super.update(pressedKeys);
 
         if (success) {
@@ -192,6 +196,7 @@ public class LabFourGame extends Game{
                     || mario.collidesWith(brick4)
                     || mario.collidesWith(brick5)
                     || mario.collidesWith(brick6)) {
+                mario.setPosition(holdPosition);
                 if (!collisionlast) {
                     SoundManager s = new SoundManager("bump");
                     score = score - 10;
@@ -206,15 +211,6 @@ public class LabFourGame extends Game{
                 SoundManager s = new SoundManager("win");
                 success = true;
             }
-
-            /*
-            if (mario.collidesWith(brick) {
-                mario.setPosition(mario.getOldPosition());
-                mario.setRotation(mario.getOldRotation());
-                mario.setScaleX(mario.getOldScaleX());
-                mario.setScaleY(mario.getOldScaleY());
-            }
-            */
         }
 
 
@@ -276,12 +272,12 @@ public class LabFourGame extends Game{
         game.initFrames();
         game.initAnimations();
         game.start();
-        SoundManager s1 = new SoundManager("readygo");
+        //SoundManager s1 = new SoundManager("readygo");
         try {
             Thread.sleep(2000);
         } catch(InterruptedException e) {
             System.out.println("Interrupted.");
         }
-        SoundManager s2 = new SoundManager("marioMusic");
+        //SoundManager s2 = new SoundManager("marioMusic");
     }
 }

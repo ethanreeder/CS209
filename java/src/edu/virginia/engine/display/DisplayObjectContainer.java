@@ -59,7 +59,6 @@ public class DisplayObjectContainer extends DisplayObject {
     {
         child.setParent(this);
         this.xs.add(child);
-
     }
 
     public void addChildAtIndex(DisplayObject child, int i)

@@ -21,8 +21,20 @@ public class DisplayObject{
 	private String id;
 	/* Describes last position for collision resolution */
 	private Point oldPosition;
+	/* Describes last position for collision resolution */
+	private Point oldOldPosition;
 	/* Describes x, y position where object is drawn */
 	private Point position;
+	/* Describes linear movement speed of the object*/
+	private float velocity;
+	/* Describes acceleration on positive X axis movement */
+	private float accelerationXN;
+	/* Describes acceleration on positive X axis movement */
+	private float accelerationXP;
+	/* Describes acceleration on positive Y axis movement */
+	private float accelerationYN;
+	/* Describes acceleration on positive Y axis movement */
+	private float accelerationYP;
 	/* Point relative to UI upper left corner around which object rotates*/
 	private Point pivotPoint;
 	/* Defines last rotation for collision resolution */
@@ -62,6 +74,10 @@ public class DisplayObject{
 	public DisplayObject()
 	{
 		this.position = new Point(0, 0);
+		this.accelerationXP = 1.0f;
+		this.accelerationXN = 1.0f;
+		this.accelerationYP = 1.0f;
+		this.accelerationYN = 1.0f;
 		this.pivotPoint = new Point(0,0);
 		this.rotation = 0;
 		this.visible = true;
@@ -77,6 +93,10 @@ public class DisplayObject{
 	public DisplayObject(String id) {
 		this.setId(id);
 		this.position = new Point(0, 0);
+		this.accelerationXP = 1.0f;
+		this.accelerationXN = 1.0f;
+		this.accelerationYP = 1.0f;
+		this.accelerationYN = 1.0f;
 		this.pivotPoint = new Point(0,0);
 		this.rotation = 0;
 		this.visible = true;
@@ -92,6 +112,10 @@ public class DisplayObject{
 		this.setId(id);
 		this.setImage(fileName);
 		this.position = new Point(0, 0);
+		this.accelerationXP = 1.0f;
+		this.accelerationXN = 1.0f;
+		this.accelerationYP = 1.0f;
+		this.accelerationYN = 1.0f;
 		this.pivotPoint = new Point(0,0);
 		this.rotation = 0;
 		this.visible = true;
@@ -114,6 +138,24 @@ public class DisplayObject{
 
 	public void setOldPosition(Point pos) {this.oldPosition = pos;}
 	public Point getOldPosition() {return oldPosition;}
+
+	public void setOldOldPosition(Point pos) {this.oldOldPosition = pos;}
+	public Point getOldOldPosition() {return oldOldPosition;}
+
+	public void setVelocity(float a) {this.velocity = a;}
+	public float getVelocity() {return velocity;}
+
+	public void setAccelerationXP(float a) {this.accelerationXP = a;}
+	public float getAccelerationXP() {return accelerationXP;}
+
+	public void setAccelerationXN(float a) {this.accelerationXN = a;}
+	public float getAccelerationXN() {return accelerationXN;}
+
+	public void setAccelerationYP(float a) {this.accelerationYP = a;}
+	public float getAccelerationYP() {return accelerationYP;}
+
+	public void setAccelerationYN(float a) {this.accelerationYN = a;}
+	public float getAccelerationYN() {return accelerationYN;}
 
 	public void setPivotPoint(Point pp) {this.pivotPoint = pp;}
 	public Point getPivotPoint() {return pivotPoint;}
@@ -256,12 +298,11 @@ public class DisplayObject{
 	 * object
 	 * */
 	protected void applyTransformations(Graphics2D g2d) {
-		this.oldPosition = this.position;
 		g2d.translate(this.position.x, this.position.y);
-		this.oldRotation = this.rotation;
+		//this.oldRotation = this.rotation;
 		g2d.rotate(Math.toRadians(this.getRotation()), this.pivotPoint.x, this.pivotPoint.y);
-		this.oldScaleX = this.scaleX;
-		this.oldScaleY = this.scaleY;
+		//this.oldScaleX = this.scaleX;
+		//this.oldScaleY = this.scaleY;
 		g2d.scale(this.scaleX, this.scaleY);
 		float curAlpha;
 		this.oldAlpha = curAlpha = ((AlphaComposite)g2d.getComposite()).getAlpha();
@@ -380,6 +421,16 @@ public class DisplayObject{
 	public boolean collidesWith(DisplayObject other) {
 		Shape s = other.getHitbox();
 		return this.getHitbox().intersects(s.getBounds2D());
+	}
+
+	public boolean collidesWithAny(ArrayList<DisplayObject> otherlist) {
+		for (int counter = 0; counter < otherlist.size(); counter++) {
+			DisplayObject curr = otherlist.get(counter);
+			if (curr != null) {
+				if (this.collidesWith(curr)) {return true;}
+			}
+		}
+		return false;
 	}
 
 }
