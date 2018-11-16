@@ -404,6 +404,7 @@ public class DisplayObject {
 	public Shape getHitbox() {
 		return this.hitbox;
 	}
+    public void setHitbox(Shape h) { this.hitbox = h; }
 
 	public void updateHitbox() {
 		Rectangle r = new Rectangle((int)(Math.round(this.getPosition().x)),

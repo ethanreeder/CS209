@@ -22,7 +22,8 @@ public class LabFiveGame extends Game{
     AnimatedSprite brick2 = new AnimatedSprite("Brick4", "brick.png", new Point(400,400));
     AnimatedSprite brick3 = new AnimatedSprite("Brick4", "brick.png", new Point(800,400));
     AnimatedSprite brick4 = new AnimatedSprite("Brick4", "brick.png", new Point(1200,400));
-    AnimatedSprite ball = new AnimatedSprite("Ball", "ball1.png", new Point(200, 0));
+    AnimatedSprite ball = new AnimatedSprite("Ball", "ball1.png", new Point(600, 0));
+    AnimatedSprite cactus = new AnimatedSprite("Cactus", "cactus1.png", new Point(300, 280));
     AnimatedSprite spark = new AnimatedSprite("Spark", "spark.png", new Point(1000, 1000));
 
     int score = 0;
@@ -62,16 +63,17 @@ public class LabFiveGame extends Game{
      * Constructor. See constructor in Game.java for details on the parameters given
      * */
     public LabFiveGame() {
-        super("Lab Five Game", 2500, 2000);
+        super("Lab Five Game", 2500, 1500);
         mario.setPhysics(true);
         star.setScaleX(getScaleX() * 0.125);
         star.setScaleY(getScaleY() * 0.125);
         ball.setPhysics(true);
         ball.setScaleX(getScaleX() * 0.125);
         ball.setScaleY(getScaleY() * 0.125);
-        spark.setPhysics(false);
-        spark.setScaleX(getScaleX() * 0.125);
-        spark.setScaleY(getScaleY() * 0.125);
+        cactus.setScaleX(getScaleX() * 0.125);
+        cactus.setScaleY(getScaleY() * 0.125);
+        spark.setScaleX(getScaleX() * 0.2);
+        spark.setScaleY(getScaleY() * 0.2);
     }
 
     /**
@@ -93,10 +95,12 @@ public class LabFiveGame extends Game{
         gameObjects.add(brick3);
         gameObjects.add(brick4);
         gameObjects.add(ball);
-        gameObjects.add(spark);
+        gameObjects.add(cactus);
+        //gameObjects.add(spark);
 
         mario.updateHitbox();
         star.updateHitbox();
+        spark.setHitbox(null);
         for (DisplayObject gameObject : gameObjects) {
             gameObject.updateHitbox();
         }
@@ -133,35 +137,19 @@ public class LabFiveGame extends Game{
         for (int counter = 0; counter < pressedKeys.size(); counter++) {
             /* Logic for Up Arrowkey Press */
             if (pressedKeys.get(counter).equals(KeyEvent.VK_UP)) {
-                ArrayList<DisplayObject> temp = mario.tryMove(0, Math.round(-5 * mario.getAccelerationYN()), gameObjects);
-                if (!temp.isEmpty()) {
-                    collisionlast = true;
-                    collisions.addAll(temp);
-                }
+                collisions.addAll(mario.tryMove(0, Math.round(-15 * mario.getAccelerationYN()), gameObjects));
             }
             /* Logic for Down Arrowkey Press */
             if (pressedKeys.get(counter).equals(KeyEvent.VK_DOWN)) {
-                ArrayList<DisplayObject> temp = mario.tryMove(0, Math.round(5 * mario.getAccelerationYP()), gameObjects);
-                if (!temp.isEmpty()) {
-                    collisionlast = true;
-                    collisions.addAll(temp);
-                }
+                collisions.addAll(mario.tryMove(0, Math.round(5 * mario.getAccelerationYP()), gameObjects));
             }
             /* Logic for Left Arrowkey Press */
             if (pressedKeys.get(counter).equals(KeyEvent.VK_LEFT)) {
-                ArrayList<DisplayObject> temp = mario.tryMove(Math.round(-5 * mario.getAccelerationXN()), 0, gameObjects);
-                if (!temp.isEmpty()) {
-                    collisionlast = true;
-                    collisions.addAll(temp);
-                }
+                collisions.addAll(mario.tryMove(Math.round(-5 * mario.getAccelerationXN()), 0, gameObjects));
             }
             /* Logic for Right Arrowkey Press */
             if (pressedKeys.get(counter).equals(KeyEvent.VK_RIGHT)) {
-                ArrayList<DisplayObject> temp = mario.tryMove(Math.round(5 * mario.getAccelerationXP()), 0, gameObjects);
-                if (!temp.isEmpty()) {
-                    collisionlast = true;
-                    collisions.addAll(temp);
-                }
+                collisions.addAll(mario.tryMove(Math.round(5 * mario.getAccelerationXP()), 0, gameObjects));
             }
 
             /* Key events which alter pivot point */
@@ -263,10 +251,16 @@ public class LabFiveGame extends Game{
             mario.setAccelerationXP(1.0f);
         }
 
-        if (collisionlast) {
-            SoundManager s = new SoundManager("bump");
-            score = score - 10;
-            collisionlast = false;
+        if (!collisions.isEmpty() && !collisionlast) {
+            for (DisplayObject collision : collisions) {
+                if (!collision.getPhysics()) {
+                    score = score - 10;
+                    SoundManager s = new SoundManager("bump");
+                }
+            }
+            collisionlast = true;
+        } else if (!collisions.isEmpty() && collisionlast) {
+            collisionlast = true;
         } else {
             collisionlast = false;
         }
@@ -296,21 +290,20 @@ public class LabFiveGame extends Game{
         for (DisplayObject collisionObject : collisions) {
             if (collisionObject.getPhysics()) {
                 if (mario.getPosition().x > collisionObject.getPosition().x) {
-                    collisionObject.tryMove(Math.round(-5*mario.getAccelerationXN()), 0, gameObjects);
+                    collisionObject.tryMove(Math.round(-5 * mario.getAccelerationXN()), 0, gameObjects);
                 } else {
-                    collisionObject.tryMove(Math.round(5*mario.getAccelerationXP()), 0, gameObjects);
+                    collisionObject.tryMove(Math.round(5 * mario.getAccelerationXP()), 0, gameObjects);
                 }
                 if (mario.getPosition().y > collisionObject.getPosition().y) {
-                    collisionObject.tryMove(0, Math.round(-5*mario.getAccelerationYN()), gameObjects);
+                    collisionObject.tryMove(0, Math.round(-5 * mario.getAccelerationYN()), gameObjects);
                 } else {
-                    collisionObject.tryMove(0, Math.round(5*mario.getAccelerationYP()), gameObjects);
+                    collisionObject.tryMove(0, Math.round(5 * mario.getAccelerationYP()), gameObjects);
                 }
+            } else {
                 spark.setVisible(true);
-                spark.setPosition(new Point((mario.getPosition().x+collisionObject.getPosition().x)/2,
-                        (mario.getPosition().y+collisionObject.getPosition().y)/2));
+                spark.setHitbox(null);
+                spark.setPosition(new Point((mario.getPosition().x+collisionObject.getPosition().x)/2, (mario.getPosition().y+collisionObject.getPosition().y)/2));
                 count = 0;
-
-
             }
         }
     }
@@ -328,7 +321,7 @@ public class LabFiveGame extends Game{
         Graphics2D g2d = (Graphics2D) g;
 
         if(mario != null) mario.draw(g);
-        g2d.draw(mario.getHitbox());
+        //g2d.draw(mario.getHitbox()); used for debugging
 
         ArrayList<DisplayObject> gameObjects = new ArrayList<DisplayObject>();
         gameObjects.add(brick1);
@@ -336,25 +329,26 @@ public class LabFiveGame extends Game{
         gameObjects.add(brick3);
         gameObjects.add(brick4);
         gameObjects.add(ball);
+        gameObjects.add(cactus);
         gameObjects.add(spark);
 
         mario.updateHitbox();
         star.updateHitbox();
         for (DisplayObject gameObject : gameObjects) {
-            gameObject.draw(g);
-            g2d.draw(gameObject.getHitbox());
+            if(gameObject != null) gameObject.draw(g);
+            //if(gameObject.getHitbox() != null) g2d.draw(gameObject.getHitbox()); used for debugging
         }
 
         if(star != null) star.draw(g);
-        g2d.draw(star.getHitbox());
+        //g2d.draw(star.getHitbox()); used for debugging
 
         if (mario.collidesWith(star)) {
             g2d.setFont(new Font("Times New Roman", Font.PLAIN, 100));
-            g2d.drawString("# YOU WIN #", 810, 900);
-            g2d.drawString("Score = " + Integer.toString(score), 810, 985);
+            g2d.drawString("# YOU WIN #", 810, 100);
+            g2d.drawString("Score = " + Integer.toString(score), 810, 1200);
         } else {
             g2d.setFont(new Font("Times New Roman", Font.PLAIN, 50));
-            g2d.drawString("Score = " + Integer.toString(score), 10, 1800);
+            g2d.drawString("Score = " + Integer.toString(score), 10, 1200);
         }
     }
 
