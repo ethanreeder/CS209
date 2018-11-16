@@ -26,7 +26,7 @@ public class LabFourGame extends Game{
     AnimatedSprite brick4 = new AnimatedSprite("Brick4", "brick.png", new Point(800,1000));
     AnimatedSprite brick5 = new AnimatedSprite("Brick5", "brick.png", new Point(1600,1000));
     AnimatedSprite brick6 = new AnimatedSprite("Brick6", "brick.png", new Point(2200,200));
-    AnimatedSprite star = new AnimatedSprite("Star", "star1.png", new Point(2040,40));
+    AnimatedSprite star = new AnimatedSprite("Star", "star1.png", new Point(1400,0));
 
 
     int score = 0;
