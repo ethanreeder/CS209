@@ -23,11 +23,13 @@ public class LabFiveGame extends Game{
     AnimatedSprite brick3 = new AnimatedSprite("Brick4", "brick.png", new Point(800,400));
     AnimatedSprite brick4 = new AnimatedSprite("Brick4", "brick.png", new Point(1200,400));
     AnimatedSprite ball = new AnimatedSprite("Ball", "ball1.png", new Point(200, 0));
+    AnimatedSprite spark = new AnimatedSprite("Spark", "spark.png", new Point(1000, 1000));
 
     int score = 0;
     boolean vlast = false;
     boolean collisionlast = false;
     boolean success = false;
+    int count = -1;
 
     private void initFrames()
     {
@@ -67,6 +69,9 @@ public class LabFiveGame extends Game{
         ball.setPhysics(true);
         ball.setScaleX(getScaleX() * 0.125);
         ball.setScaleY(getScaleY() * 0.125);
+        spark.setPhysics(false);
+        spark.setScaleX(getScaleX() * 0.125);
+        spark.setScaleY(getScaleY() * 0.125);
     }
 
     /**
@@ -88,12 +93,14 @@ public class LabFiveGame extends Game{
         gameObjects.add(brick3);
         gameObjects.add(brick4);
         gameObjects.add(ball);
+        gameObjects.add(spark);
 
         mario.updateHitbox();
         star.updateHitbox();
         for (DisplayObject gameObject : gameObjects) {
             gameObject.updateHitbox();
         }
+
 
         if (success) {
             try {
@@ -166,15 +173,15 @@ public class LabFiveGame extends Game{
                 mario.setPivotPoint(new Point(mario.getPivotPoint().x-1, mario.getPivotPoint().y));
             } else if (pressedKeys.get(counter).equals(KeyEvent.VK_L)) {
                 mario.setPivotPoint(new Point(mario.getPivotPoint().x+1, mario.getPivotPoint().y));
-            /* Key events which alter rotation */
+                /* Key events which alter rotation */
             } else if (pressedKeys.get(counter).equals(KeyEvent.VK_Q)) {
                 mario.setRotation(mario.getRotation()-5);
             } else if (pressedKeys.get(counter).equals(KeyEvent.VK_W)) {
                 mario.setRotation(mario.getRotation()+5);
-            /* Key events which alter visibility */
+                /* Key events which alter visibility */
             } else if (pressedKeys.get(counter).equals(KeyEvent.VK_V)) {
                 vlast = true;
-            /* Key events which alter transparency */
+                /* Key events which alter transparency */
             } else if (pressedKeys.get(counter).equals(KeyEvent.VK_Z)) {
                 if(mario.getAlpha() < 1.0f) {
                     mario.setOldAlpha(mario.getAlpha());
@@ -185,7 +192,7 @@ public class LabFiveGame extends Game{
                     mario.setOldAlpha(mario.getAlpha());
                     mario.setAlpha(mario.getAlpha() - 0.1f);
                 }
-            /* Key events which alter scaling */
+                /* Key events which alter scaling */
             } else if (pressedKeys.get(counter).equals(KeyEvent.VK_A)) {
                 mario.setScaleX(mario.getScaleX()+0.05);
                 mario.setScaleY(mario.getScaleY()+0.05);
@@ -274,6 +281,17 @@ public class LabFiveGame extends Game{
         if (collisions.contains(ball)) {
             ball.tryMove(5, 0, gameObjects);
         }*/
+        if(count >= 0)
+            count++;
+
+        if(count > 4)
+            count = -1;
+
+        if(!collisionlast && count < 0){
+            spark.setVisible(false);
+            spark.setPosition(new Point(1000, 1000));
+        }
+
 
         for (DisplayObject collisionObject : collisions) {
             if (collisionObject.getPhysics()) {
@@ -287,6 +305,12 @@ public class LabFiveGame extends Game{
                 } else {
                     collisionObject.tryMove(0, Math.round(5*mario.getAccelerationYP()), gameObjects);
                 }
+                spark.setVisible(true);
+                spark.setPosition(new Point((mario.getPosition().x+collisionObject.getPosition().x)/2,
+                        (mario.getPosition().y+collisionObject.getPosition().y)/2));
+                count = 0;
+
+
             }
         }
     }
@@ -312,6 +336,7 @@ public class LabFiveGame extends Game{
         gameObjects.add(brick3);
         gameObjects.add(brick4);
         gameObjects.add(ball);
+        gameObjects.add(spark);
 
         mario.updateHitbox();
         star.updateHitbox();
