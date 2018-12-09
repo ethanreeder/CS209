@@ -14,14 +14,14 @@ import java.util.ArrayList;
  * Example game that utilizes our engine. We can create a simple prototype game with just a couple lines of code
  * although, for now, it won't be a very fun game :)
  * */
-public class LabFiveGame extends Game{
+public class LabFiveGame extends Game {
 
-    AnimatedSprite mario = new AnimatedSprite("Mario", "Mario.png", new Point(0,200));
-    AnimatedSprite star = new AnimatedSprite("Star", "star1.png", new Point(2040,200));
+    AnimatedSprite mario = new AnimatedSprite("Mario", "Mario.png", new Point(0, 200));
+    AnimatedSprite star = new AnimatedSprite("Star", "star1.png", new Point(2040, 200));
     AnimatedSprite brick1 = new AnimatedSprite("Brick", "brick.png", new Point(0, 400));
-    AnimatedSprite brick2 = new AnimatedSprite("Brick4", "brick.png", new Point(400,400));
-    AnimatedSprite brick3 = new AnimatedSprite("Brick4", "brick.png", new Point(800,400));
-    AnimatedSprite brick4 = new AnimatedSprite("Brick4", "brick.png", new Point(1200,400));
+    AnimatedSprite brick2 = new AnimatedSprite("Brick4", "brick.png", new Point(400, 400));
+    AnimatedSprite brick3 = new AnimatedSprite("Brick4", "brick.png", new Point(800, 400));
+    AnimatedSprite brick4 = new AnimatedSprite("Brick4", "brick.png", new Point(1200, 400));
     AnimatedSprite ball = new AnimatedSprite("Ball", "ball1.png", new Point(600, 0));
     AnimatedSprite cactus = new AnimatedSprite("Cactus", "cactus1.png", new Point(300, 280));
     AnimatedSprite spark = new AnimatedSprite("Spark", "spark.png", new Point(1000, 1000));
@@ -32,10 +32,8 @@ public class LabFiveGame extends Game{
     boolean success = false;
     int count = -1;
 
-    private void initFrames()
-    {
-        if(mario != null)
-        {
+    private void initFrames() {
+        if (mario != null) {
             /*
             for(int i = 1; i < 12; i++)
                 mario.addFrame("jump"+i+".png");
@@ -54,14 +52,14 @@ public class LabFiveGame extends Game{
         }
     }
 
-    private void initAnimations()
-    {
+    private void initAnimations() {
         Animation a = new Animation("jump,", 0, 10);
         mario.setAnimations(a);
     }
+
     /**
      * Constructor. See constructor in Game.java for details on the parameters given
-     * */
+     */
     public LabFiveGame() {
         super("Lab Five Game", 2500, 1500);
         mario.setPhysics(true);
@@ -79,13 +77,13 @@ public class LabFiveGame extends Game{
     /**
      * Engine will automatically call this update method once per frame and pass to us
      * the set of keys (as strings) that are currently being pressed down
-     * */
+     */
     @Override
-    public void update(ArrayList<Integer> pressedKeys){
+    public void update(ArrayList<Integer> pressedKeys) {
 
         super.update(pressedKeys);
         /* Make sure mario is not null. Sometimes Swing can auto cause an extra frame to go before everything is initialized */
-        if(mario != null) mario.update(pressedKeys);
+        if (mario != null) mario.update(pressedKeys);
 
         Point holdPosition;
         ArrayList<DisplayObject> gameObjects = new ArrayList<DisplayObject>();
@@ -109,7 +107,7 @@ public class LabFiveGame extends Game{
         if (success) {
             try {
                 Thread.sleep(4000);
-            } catch(InterruptedException e) {
+            } catch (InterruptedException e) {
                 System.out.println("Interrupted.");
             }
             System.exit(0);
@@ -121,7 +119,9 @@ public class LabFiveGame extends Game{
         }
 
         /* Add key press event to update visibility */
-        if (pressedKeys.size() == 0 && vlast) { pressedKeys.add(KeyEvent.KEY_PRESSED); }
+        if (pressedKeys.size() == 0 && vlast) {
+            pressedKeys.add(KeyEvent.KEY_PRESSED);
+        }
 
         if (pressedKeys.contains(KeyEvent.VK_T)) {
             mario.setAccelerationXN(10.0f);
@@ -154,69 +154,66 @@ public class LabFiveGame extends Game{
 
             /* Key events which alter pivot point */
             if (pressedKeys.get(counter).equals(KeyEvent.VK_I)) {
-                mario.setPivotPoint(new Point(mario.getPivotPoint().x, mario.getPivotPoint().y-1));
+                mario.setPivotPoint(new Point(mario.getPivotPoint().x, mario.getPivotPoint().y - 1));
             } else if (pressedKeys.get(counter).equals(KeyEvent.VK_K)) {
-                mario.setPivotPoint(new Point(mario.getPivotPoint().x, mario.getPivotPoint().y+1));
+                mario.setPivotPoint(new Point(mario.getPivotPoint().x, mario.getPivotPoint().y + 1));
             } else if (pressedKeys.get(counter).equals(KeyEvent.VK_J)) {
-                mario.setPivotPoint(new Point(mario.getPivotPoint().x-1, mario.getPivotPoint().y));
+                mario.setPivotPoint(new Point(mario.getPivotPoint().x - 1, mario.getPivotPoint().y));
             } else if (pressedKeys.get(counter).equals(KeyEvent.VK_L)) {
-                mario.setPivotPoint(new Point(mario.getPivotPoint().x+1, mario.getPivotPoint().y));
+                mario.setPivotPoint(new Point(mario.getPivotPoint().x + 1, mario.getPivotPoint().y));
                 /* Key events which alter rotation */
             } else if (pressedKeys.get(counter).equals(KeyEvent.VK_Q)) {
-                mario.setRotation(mario.getRotation()-5);
+                mario.setRotation(mario.getRotation() - 5);
             } else if (pressedKeys.get(counter).equals(KeyEvent.VK_W)) {
-                mario.setRotation(mario.getRotation()+5);
+                mario.setRotation(mario.getRotation() + 5);
                 /* Key events which alter visibility */
             } else if (pressedKeys.get(counter).equals(KeyEvent.VK_V)) {
                 vlast = true;
                 /* Key events which alter transparency */
             } else if (pressedKeys.get(counter).equals(KeyEvent.VK_Z)) {
-                if(mario.getAlpha() < 1.0f) {
+                if (mario.getAlpha() < 1.0f) {
                     mario.setOldAlpha(mario.getAlpha());
-                    mario.setAlpha(mario.getAlpha()+0.1f);
+                    mario.setAlpha(mario.getAlpha() + 0.1f);
                 }
             } else if (pressedKeys.get(counter).equals(KeyEvent.VK_X)) {
-                if(mario.getAlpha() - 0.1f >= 0.0f) {
+                if (mario.getAlpha() - 0.1f >= 0.0f) {
                     mario.setOldAlpha(mario.getAlpha());
                     mario.setAlpha(mario.getAlpha() - 0.1f);
                 }
                 /* Key events which alter scaling */
             } else if (pressedKeys.get(counter).equals(KeyEvent.VK_A)) {
-                mario.setScaleX(mario.getScaleX()+0.05);
-                mario.setScaleY(mario.getScaleY()+0.05);
+                mario.setScaleX(mario.getScaleX() + 0.05);
+                mario.setScaleY(mario.getScaleY() + 0.05);
             } else if (pressedKeys.get(counter).equals(KeyEvent.VK_S)) {
                 if (mario.getScaleX() > 0.01) {
-                    mario.setScaleX(mario.getScaleX()-0.05);
+                    mario.setScaleX(mario.getScaleX() - 0.05);
                 }
                 if (mario.getScaleY() > 0.01) {
-                    mario.setScaleY(mario.getScaleY()-0.05);
+                    mario.setScaleY(mario.getScaleY() - 0.05);
                 }
-            }
-            else if(pressedKeys.get(counter).equals(KeyEvent.VK_PLUS)) {
-                mario.setAnimationSpeed(mario.getAnimationSpeed()+1);
-            }
-            else if(pressedKeys.get(counter).equals(KeyEvent.VK_MINUS)) {
-                mario.setAnimationSpeed(mario.getAnimationSpeed()-1);
+            } else if (pressedKeys.get(counter).equals(KeyEvent.VK_PLUS)) {
+                mario.setAnimationSpeed(mario.getAnimationSpeed() + 1);
+            } else if (pressedKeys.get(counter).equals(KeyEvent.VK_MINUS)) {
+                mario.setAnimationSpeed(mario.getAnimationSpeed() - 1);
             }
 
             /* Logic for Space Key Press */
-            else if (pressedKeys.get(counter).equals(KeyEvent.VK_SPACE)){
+            else if (pressedKeys.get(counter).equals(KeyEvent.VK_SPACE)) {
                 //mario.setPlaying(true);
                 //mario.animate("jump");
                 mario.jump(true);
-                mario.setCount(mario.getCount()+1);
+                mario.setCount(mario.getCount() + 1);
                 SoundManager s = new SoundManager("jump");
-                for(int i = 0; i < 2; i++)
+                for (int i = 0; i < 2; i++)
                     pressedKeys.add(1);
-            } else if(pressedKeys.get(counter).equals(1)) {
+            } else if (pressedKeys.get(counter).equals(1)) {
                 //mario.jump(false);
-                if(mario.getCount() >= 500) {
+                if (mario.getCount() >= 500) {
                     mario.setCount(0);
                     //mario.jump(false);
                     mario.setImage(mario.readImage("Mario.png"));
-                }
-                else
-                    mario.setCount(mario.getCount()+1);
+                } else
+                    mario.setCount(mario.getCount() + 1);
             }
         }
         /* Check if v was released in order to toggle visibility */
@@ -231,22 +228,30 @@ public class LabFiveGame extends Game{
 
         /* Manage Acceleration */
         if (pressedKeys.contains(KeyEvent.VK_UP)) {
-            if (mario.getAccelerationYN() <= 2) {mario.setAccelerationYN(mario.getAccelerationYN() + 0.05f);}
+            if (mario.getAccelerationYN() <= 2) {
+                mario.setAccelerationYN(mario.getAccelerationYN() + 0.05f);
+            }
         } else {
             mario.setAccelerationYN(1.0f);
         }
         if (pressedKeys.contains(KeyEvent.VK_DOWN)) {
-            if (mario.getAccelerationYP() <= 5) {mario.setAccelerationYP(mario.getAccelerationYP() + 0.05f);}
+            if (mario.getAccelerationYP() <= 5) {
+                mario.setAccelerationYP(mario.getAccelerationYP() + 0.05f);
+            }
         } else {
             mario.setAccelerationYP(1.0f);
         }
         if (pressedKeys.contains(KeyEvent.VK_LEFT)) {
-            if (mario.getAccelerationXN() <= 5) {mario.setAccelerationXN(mario.getAccelerationXN() + 0.05f);}
+            if (mario.getAccelerationXN() <= 5) {
+                mario.setAccelerationXN(mario.getAccelerationXN() + 0.05f);
+            }
         } else {
             mario.setAccelerationXN(1.0f);
         }
         if (pressedKeys.contains(KeyEvent.VK_RIGHT)) {
-            if (mario.getAccelerationXP() <= 5) {mario.setAccelerationXP(mario.getAccelerationXP() + 0.05f);}
+            if (mario.getAccelerationXP() <= 5) {
+                mario.setAccelerationXP(mario.getAccelerationXP() + 0.05f);
+            }
         } else {
             mario.setAccelerationXP(1.0f);
         }
@@ -275,13 +280,13 @@ public class LabFiveGame extends Game{
         if (collisions.contains(ball)) {
             ball.tryMove(5, 0, gameObjects);
         }*/
-        if(count >= 0)
+        if (count >= 0)
             count++;
 
-        if(count > 4)
+        if (count > 4)
             count = -1;
 
-        if(!collisionlast && count < 0){
+        if (!collisionlast && count < 0) {
             spark.setVisible(false);
             spark.setPosition(new Point(1000, 1000));
         }
@@ -302,25 +307,24 @@ public class LabFiveGame extends Game{
             } else {
                 spark.setVisible(true);
                 spark.setHitbox(null);
-                spark.setPosition(new Point((mario.getPosition().x+collisionObject.getPosition().x)/2, (mario.getPosition().y+collisionObject.getPosition().y)/2));
+                spark.setPosition(new Point((mario.getPosition().x + collisionObject.getPosition().x) / 2, (mario.getPosition().y + collisionObject.getPosition().y) / 2));
                 count = 0;
             }
         }
     }
 
 
-
     /**
      * Engine automatically invokes draw() every frame as well. If we want to make sure mario gets drawn to
      * the screen, we need to make sure to override this method and call mario's draw method.
-     * */
+     */
     @Override
-    public void draw(Graphics g){
+    public void draw(Graphics g) {
         super.draw(g);
 
         Graphics2D g2d = (Graphics2D) g;
 
-        if(mario != null) mario.draw(g);
+        if (mario != null) mario.draw(g);
         //g2d.draw(mario.getHitbox()); used for debugging
 
         ArrayList<DisplayObject> gameObjects = new ArrayList<DisplayObject>();
@@ -335,11 +339,11 @@ public class LabFiveGame extends Game{
         mario.updateHitbox();
         star.updateHitbox();
         for (DisplayObject gameObject : gameObjects) {
-            if(gameObject != null) gameObject.draw(g);
+            if (gameObject != null) gameObject.draw(g);
             //if(gameObject.getHitbox() != null) g2d.draw(gameObject.getHitbox()); used for debugging
         }
 
-        if(star != null) star.draw(g);
+        if (star != null) star.draw(g);
         //g2d.draw(star.getHitbox()); used for debugging
 
         if (mario.collidesWith(star)) {
@@ -355,7 +359,7 @@ public class LabFiveGame extends Game{
     /**
      * Quick main class that simply creates an instance of our game and starts the timer
      * that calls update() and draw() every frame
-     * */
+     */
     public static void main(String[] args) {
         LabFiveGame game = new LabFiveGame();
         game.initFrames();
@@ -364,7 +368,7 @@ public class LabFiveGame extends Game{
         SoundManager s1 = new SoundManager("readygo");
         try {
             Thread.sleep(2000);
-        } catch(InterruptedException e) {
+        } catch (InterruptedException e) {
             System.out.println("Interrupted.");
         }
         SoundManager s2 = new SoundManager("marioMusic");

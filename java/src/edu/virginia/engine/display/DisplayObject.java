@@ -302,9 +302,9 @@ public class DisplayObject {
 	 * */
 
 	public void draw(Graphics g) {
-		
+
 		if (displayImage != null && visible) {
-			
+
 			/*
 			 * Get the graphics and apply this objects transformations
 			 * (rotation, etc.)
@@ -356,7 +356,6 @@ public class DisplayObject {
 		public void jump(boolean y) {
 			BufferedImage old = this.readImage(this.id + ".png");
 			this.setImage("jump.png");
-//*
 			if (y) {
 				this.setPosition(new Point(this.getPosition().x, this.getPosition().y - 3));
 				try {
@@ -387,7 +386,7 @@ public class DisplayObject {
 						this.getParent().getPosition().y - this.getParent().globalToLocal(p).y);
 
 		}
-/*
+	/*
 	public Point localToGlobal(Point p) {
 		DisplayObject temp = null;
 		while (this.parent != null) {
@@ -399,7 +398,7 @@ public class DisplayObject {
 	public Point globalToLocal(Point p) {
 		return new Point(p.x + this.position.x, p.y + this.position.y);
 	}
-*/
+	*/
 
 	public Shape getHitbox() {
 		return this.hitbox;
@@ -457,7 +456,13 @@ public class DisplayObject {
 				this.setPosition(holdPosition);
 				this.updateHitbox();
 			} else {
-				;
+				this.setPosition(holdPosition);
+				this.updateHitbox();
+				for (DisplayObject obj : objList) {
+					if (obj != null && this != obj) {
+						obj.setPosition(new Point(obj.getPosition().x - xChange, obj.getPosition().y - yChange));
+					}
+				}
 			}
 		} else {
 			this.setPosition(new Point(this.getPosition().x + xChange, this.getPosition().y + yChange));
@@ -467,10 +472,15 @@ public class DisplayObject {
 				this.setPosition(new Point(holdPosition));
 				this.updateHitbox();
 			} else {
-				;
+				this.setPosition(holdPosition);
+				this.updateHitbox();
+				for (DisplayObject obj : objList) {
+					if (obj != null && this != obj) {
+						obj.setPosition(new Point(obj.getPosition().x - xChange, obj.getPosition().y - yChange));
+					}
+				}
 			}
 		}
 		return collisions;
 	}
-
 }

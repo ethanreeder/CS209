@@ -41,6 +41,8 @@ public class AnimatedSprite extends Sprite {
         this.setCount(0);
     }
 
+    public void setFileName(String str) {this.fileName = str;}
+    public String getFileName() {return this.fileName;}
 
     public void setStartFrame(int sF) {this.startFrame = sF;}
     public int getStartFrame() {return this.startFrame;}

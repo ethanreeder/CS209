@@ -106,22 +106,12 @@ public class DisplayObjectContainer extends DisplayObject {
         Graphics2D g2d = (Graphics2D) g;
         applyTransformations(g2d);
 
-        /*
-        for(DisplayObject x : this.xs)
-        {
-            x.draw(g);
-        }
-        */
         if(this.xs.size() != 0) {
             for (int i = 0; i < this.xs.size(); i++) {
                 this.xs.get(i).draw(g);
             }
-
-            reverseTransformations(g2d);
         }
+
+        reverseTransformations(g2d);
     }
-
 }
-
-
-
