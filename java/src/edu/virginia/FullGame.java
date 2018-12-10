@@ -52,13 +52,28 @@ public class FullGame extends Game{
 
     /* Interactable Objects */
 
-    AnimatedSprite mario = new AnimatedSprite("Mario", "Mario.png", new Point(1000,1000));
+    AnimatedSprite mario = new AnimatedSprite("Mario", "Mario.png", new Point(425,275));
 
-    AnimatedSprite stairs1 = new AnimatedSprite("Stairs1", "stairs1.png", new Point(745,-540));
+    AnimatedSprite stairs1 = new AnimatedSprite("Stairs1", "stairs1.png", new Point(75,-250));
 
-    AnimatedSprite key1 = new AnimatedSprite("Key1", "key1.png", new Point(-600,1200));
+    AnimatedSprite key1 = new AnimatedSprite("Key1", "key1.png", new Point(275,500));
 
     AnimatedSprite puzzle1L2Entry = new AnimatedSprite("L2Minigame1", "puzzle7.png", new Point(820,0));
+
+
+    AnimatedSprite stairs2 = new AnimatedSprite("Stairs1", "stairs1.png", new Point(5250,0));
+
+    AnimatedSprite key2 = new AnimatedSprite("Key1", "key2.png", new Point(2524,500));
+
+
+
+    AnimatedSprite stairs3 = new AnimatedSprite("Stairs1", "door.png", new Point(900,-1050));
+
+    AnimatedSprite key3 = new AnimatedSprite("Key1", "key3.png", new Point(3000,-200));
+
+    AnimatedSprite key4 = new AnimatedSprite("Key1", "key4.png", new Point(1125,500));
+
+
 
     private void initFrames()
     {
@@ -86,17 +101,39 @@ public class FullGame extends Game{
      * Constructor. See constructor in Game.java for details on the parameters given
      * */
     public FullGame() {
-        super("Lab Five Game", 2000, 2000);
+        super("Lab Five Game", 1000, 800);
 
         /* ##### Level 1 ###### */
+
+        mario.setScaleX(getScaleX()*.5);
+        mario.setScaleY(getScaleY()*.5);
 
         stairs1.setScaleX(getScaleX());
         stairs1.setScaleY(getScaleY() * 0.5);
 
-        key1.setScaleX(getScaleX() * 0.125);
-        key1.setScaleY(getScaleY() * 0.125);
+        key1.setScaleX(getScaleX() * 0.08);
+        key1.setScaleY(getScaleY() * 0.08);
 
         this.getGameObjectsL1().add(mario);
+
+        AnimatedSprite brick = new AnimatedSprite("Brick1", "brick.png", new Point(-300, 25));
+        brick.setScaleX(getScaleX() * 0.5);
+        //brick.setScaleY(getScaleY() * 0.5);
+        this.getGameObjectsL1().add(brick);
+
+
+        AnimatedSprite brick2 = new AnimatedSprite("Brick2", "brick.png", new Point(850, 25));
+        brick2.setScaleX(getScaleX() * 0.5);
+        //brick.setScaleY(getScaleY() * 0.5);
+        this.getGameObjectsL1().add(brick2);
+
+
+        AnimatedSprite brick3 = new AnimatedSprite("Brick3", "brick.png", new Point(75, 650));
+        //brick3.setScaleX(getScaleX() * 0.5);
+        brick3.setScaleY(getScaleY() * 0.5);
+        this.getGameObjectsL1().add(brick3);
+
+        /*
         this.getGameObjectsL1().add(new AnimatedSprite("Brick1", "brick.png", new Point(0, 400)));
         this.getGameObjectsL1().add(new AnimatedSprite("Brick1", "brick.png", new Point(-625, -225)));
         this.getGameObjectsL1().add(new AnimatedSprite("Brick1", "brick.png", new Point(-625, 400)));
@@ -113,6 +150,8 @@ public class FullGame extends Game{
         this.getGameObjectsL1().add(new AnimatedSprite("Brick1", "brick.png", new Point(1500, 2225)));
         this.getGameObjectsL1().add(new AnimatedSprite("Brick1", "brick.png", new Point(2125, 1600)));
         this.getGameObjectsL1().add(new AnimatedSprite("Brick1", "brick.png", new Point(2125, 2225)));
+        */
+
 
         gameObjectsL1.add(stairs1);
         gameObjectsL1.add(key1);
@@ -120,15 +159,112 @@ public class FullGame extends Game{
         /* ##### Level 2 ##### */
 
         this.getGameObjectsL2().add(mario);
-        this.getGameObjectsL2().add(new AnimatedSprite("Brick1", "brick.png", new Point(0, 550)));
-        this.getGameObjectsL2().add(new AnimatedSprite("Brick1", "brick.png", new Point(1500, 550)));
-        this.getGameObjectsL2().add(new AnimatedSprite("Stairs1", "stairs1.png", new Point(745,1150)));
-        this.getGameObjectsL2().add(new AnimatedSprite("L2Minigame1", "puzzle7.png", new Point(820,0)));
+
+        AnimatedSprite brick21 = new AnimatedSprite("Brick1", "wall3.png", new Point(150, 600));
+        brick21.setScaleX(getScaleX()*2);
+        brick21.setScaleY(getScaleY()*.25);
+        this.getGameObjectsL2().add(brick21);
+
+        AnimatedSprite brick22 = new AnimatedSprite("Brick1", "wall3.png", new Point(150, -300));
+        brick22.setScaleX(getScaleX()*2);
+        brick22.setScaleY(getScaleY()*.25);
+        this.getGameObjectsL2().add(brick22);
+
+        AnimatedSprite brick23 = new AnimatedSprite("Brick1", "wall3.png", new Point(100, -100));
+        brick23.setScaleX(getScaleX()*.1);
+        brick23.setScaleY(getScaleY()*.5);
+        this.getGameObjectsL2().add(brick23);
+
+        stairs2.setRotation(90);
+        this.getGameObjectsL2().add(stairs2);
+
+        key2.setScaleX(getScaleX() * 0.08);
+        key2.setScaleY(getScaleY() * 0.08);
+        this.getGameObjectsL2().add(key2);
+
+
+        //this.getGameObjectsL2().add(new AnimatedSprite("Brick1", "brick.png", new Point(1500, 550)));
+        //this.getGameObjectsL2().add(new AnimatedSprite("Stairs1", "stairs1.png", new Point(745,1150)));
+
+
+        //this.getGameObjectsL2().add(new AnimatedSprite("L2Minigame1", "puzzle7.png", new Point(820,0)));
 
         //this.getGameObjectsL2().add(new Dial("bear1.png", "bear1.png", "butterfly1.png", "crab1.png", new Point(0, 0)));
-        this.getGameObjectsL2().add(new AnimatedSprite("bear", "bear1.png", new Point(0, 0)));
+        //this.getGameObjectsL2().add(new AnimatedSprite("bear", "bear1.png", new Point(0, 0)));
 
         /* ##### Level 3 ##### */
+
+        AnimatedSprite brick39 = new AnimatedSprite("Brick1", "wall7.png", new Point(1700, -1000));
+        brick39.setScaleX(getScaleX()*.05);
+        brick39.setScaleY(getScaleY()*.5);
+        brick39.setRotation(90);
+        this.getGameObjectsL3().add(brick39);
+
+
+        this.getGameObjectsL3().add(mario);
+
+
+        key3.setScaleX(getScaleX()*.08);
+        key3.setScaleY(getScaleY()*.08);
+
+        key4.setScaleX(getScaleX()*.08);
+        key4.setScaleY(getScaleY()*.08);
+
+        this.getGameObjectsL3().add(key3);
+        this.getGameObjectsL3().add(key4);
+
+
+        AnimatedSprite brick31 = new AnimatedSprite("Brick1", "wall6.png", new Point(-100, -700));
+        brick31.setScaleX(getScaleX()*.25);
+        brick31.setScaleY(getScaleY()*1.75);
+        this.getGameObjectsL3().add(brick31);
+
+        AnimatedSprite brick32 = new AnimatedSprite("Brick1", "wall6.png", new Point(700, -100));
+        brick32.setScaleX(getScaleX()*.25);
+        this.getGameObjectsL3().add(brick32);
+
+        AnimatedSprite brick36 = new AnimatedSprite("Brick1", "wall6.png", new Point(1500, -100));
+        brick36.setScaleX(getScaleX()*2);
+        this.getGameObjectsL3().add(brick36);
+
+        AnimatedSprite brick37 = new AnimatedSprite("Brick1", "wall5.png", new Point(1500, -1000));
+        brick37.setScaleX(getScaleX()*2);
+        this.getGameObjectsL3().add(brick37);
+
+        AnimatedSprite brick38 = new AnimatedSprite("Brick1", "wall7.png", new Point(3100, -200));
+        brick38.setScaleX(getScaleX()*.05);
+        brick38.setScaleY(getScaleY()*.075);
+        this.getGameObjectsL3().add(brick38);
+
+
+
+        AnimatedSprite brick33 = new AnimatedSprite("Brick1", "wall7.png", new Point(1750, 700));
+        brick33.setScaleX(getScaleX()*.05);
+        brick33.setScaleY(getScaleY()*2);
+        brick33.setRotation(90);
+        this.getGameObjectsL3().add(brick33);
+
+
+        AnimatedSprite brick34 = new AnimatedSprite("Brick1", "wall5.png", new Point(1300, -600));
+        brick34.setScaleX(getScaleX()*.25);
+        brick34.setScaleY(getScaleY()*2);
+        brick34.setRotation(90);
+        this.getGameObjectsL3().add(brick34);
+
+        /*
+        AnimatedSprite brick35 = new AnimatedSprite("Brick1", "wall5.png", new Point(700, -400));
+        brick35.setScaleX(getScaleX()*.25);
+        brick35.setRotation(90);
+        this.getGameObjectsL3().add(brick35);
+        */
+
+
+        stairs3.setScaleX(getScaleX()*.6);
+        stairs3.setScaleY(getScaleY()*.6);
+
+        this.getGameObjectsL3().add(stairs3);
+
+
     }
 
     /**
@@ -247,6 +383,7 @@ public class FullGame extends Game{
             }
 
             /* Logic for Space Key Press */
+            /*
             else if (pressedKeys.get(counter).equals(KeyEvent.VK_SPACE)){
                 //mario.setPlaying(true);
                 //mario.animate("jump");
@@ -255,7 +392,9 @@ public class FullGame extends Game{
                 SoundManager s = new SoundManager("jump");
                 for(int i = 0; i < 2; i++)
                     pressedKeys.add(1);
-            } else if(pressedKeys.get(counter).equals(1)) {
+            }
+            */
+            else if(pressedKeys.get(counter).equals(1)) {
                 //mario.jump(false);
                 if(mario.getCount() >= 500) {
                     mario.setCount(0);
@@ -316,12 +455,38 @@ public class FullGame extends Game{
 
         if (collisions.contains(key1)) {
             inventory.add(key1);
+            //key1.setPosition(new Point(mario.getPosition().x+100, mario.getPosition().y+100));
             this.getGameObjectsL1().remove(key1);
         }
 
-        if (inventory.contains(key1) && stairs1.getPosition().y > 650) {
+        if (collisions.contains(key2)) {
+            inventory.add(key2);
+            this.getGameObjectsL2().remove(key2);
+        }
+
+        if (collisions.contains(key3)) {
+            inventory.add(key3);
+            this.getGameObjectsL3().remove(key3);
+        }
+
+        if (collisions.contains(key4)) {
+            inventory.add(key4);
+            this.getGameObjectsL3().remove(key4);
+        }
+
+        if (inventory.contains(key1) && collisions.contains(stairs1)) {
             SoundManager s = new SoundManager("win");
             level = 2;
+        }
+
+        if (inventory.contains(key2) && collisions.contains(stairs2)) {
+            SoundManager s = new SoundManager("win");
+            level = 3;
+        }
+
+        if (inventory.contains(key3) && inventory.contains(key4) && collisions.contains(stairs3)) {
+            SoundManager s = new SoundManager("win");
+            level = 4;
         }
 
 
@@ -355,19 +520,125 @@ public class FullGame extends Game{
 
         Graphics2D g2d = (Graphics2D) g;
 
+        /*
+        for(DisplayObject key : inventory){
+            key.setPosition(new Point(mario.getPosition().x+100, mario.getPosition().y - 100));
+            key.draw(g);
+        }
+        */
+
+
+
 
         if (level == 1) {
             for (DisplayObject gameObject : this.getGameObjectsL1()) {
                 if(gameObject != null) gameObject.draw(g);
             }
+
+            //if(inventory.contains(key1) && mario.collidesWith(stairs1)){
+            g2d.setFont(new Font("Times New Roman", Font.PLAIN, 40));
+            g2d.setColor(Color.GRAY);
+            g2d.setBackground (Color.GRAY);
+            g2d.drawString("# Level 1: The Attic #", 32, 32);
+
+            g2d.setFont(new Font("Times New Roman", Font.PLAIN, 40));
+            g2d.setColor(Color.WHITE);
+            g2d.setBackground (Color.WHITE);
+            g2d.drawString("# Level 1: The Attic #", 30, 30);
+
+
+            g2d.setFont(new Font("Times New Roman", Font.PLAIN, 40));
+            g2d.setColor(Color.GRAY);
+            g2d.setBackground (Color.GRAY);
+            g2d.drawString("# Inventory: #", 700, 32);
+
+            g2d.setFont(new Font("Times New Roman", Font.PLAIN, 40));
+            g2d.setColor(Color.WHITE);
+            g2d.setBackground (Color.WHITE);
+            g2d.drawString("# Inventory: #", 702, 30);
+
+
+            if(inventory.contains(key1)){
+                key1.setPosition(new Point(800, 75));
+                key1.draw(g);
+            }
+
+            //}
         } else if (level == 2) {
             for (DisplayObject gameObject : this.getGameObjectsL2()) {
                 if(gameObject != null) gameObject.draw(g);
             }
+
+            g2d.setFont(new Font("Times New Roman", Font.PLAIN, 40));
+            g2d.setColor(Color.GRAY);
+            g2d.setBackground (Color.GRAY);
+            g2d.drawString("# Level N: Ground Floor #", 32, 32);
+
+            g2d.setFont(new Font("Times New Roman", Font.PLAIN, 40));
+            g2d.setColor(Color.WHITE);
+            g2d.setBackground (Color.WHITE);
+            g2d.drawString("# Level N: Ground Floor #", 30, 30);
+
+
+            g2d.setFont(new Font("Times New Roman", Font.PLAIN, 40));
+            g2d.setColor(Color.GRAY);
+            g2d.setBackground (Color.GRAY);
+            g2d.drawString("# Inventory: #", 700, 32);
+
+            g2d.setFont(new Font("Times New Roman", Font.PLAIN, 40));
+            g2d.setColor(Color.WHITE);
+            g2d.setBackground (Color.WHITE);
+            g2d.drawString("# Inventory: #", 702, 30);
+
+            key1.setPosition(new Point(800, 75));
+            key1.draw(g);
+
+            if(inventory.contains(key2)){
+                key2.setPosition(new Point(800, 200));
+                key2.draw(g);
+            }
+
         } else if (level == 3) {
             for (DisplayObject gameObject : this.getGameObjectsL3()) {
                 if(gameObject != null) gameObject.draw(g);
             }
+
+            g2d.setFont(new Font("Times New Roman", Font.PLAIN, 40));
+            g2d.setColor(Color.GRAY);
+            g2d.setBackground (Color.GRAY);
+            g2d.drawString("# Level N + 1: The End #", 32, 32);
+
+            g2d.setFont(new Font("Times New Roman", Font.PLAIN, 40));
+            g2d.setColor(Color.WHITE);
+            g2d.setBackground (Color.WHITE);
+            g2d.drawString("# Level N + 1: The End #", 30, 30);
+
+            g2d.setFont(new Font("Times New Roman", Font.PLAIN, 40));
+            g2d.setColor(Color.GRAY);
+            g2d.setBackground (Color.GRAY);
+            g2d.drawString("# Inventory: #", 700, 32);
+
+            g2d.setFont(new Font("Times New Roman", Font.PLAIN, 40));
+            g2d.setColor(Color.WHITE);
+            g2d.setBackground (Color.WHITE);
+            g2d.drawString("# Inventory: #", 702, 30);
+
+            key1.setPosition(new Point(800, 75));
+            key1.draw(g);
+
+            key2.setPosition(new Point(800, 200));
+            key2.draw(g);
+
+            if(inventory.contains(key3)){
+                key3.setPosition(new Point(800, 300));
+                key3.draw(g);
+            }
+
+            if(inventory.contains(key4)) {
+                key4.setPosition(new Point(800, 400));
+                key4.draw(g);
+            }
+
         } else {
             ;
         }
