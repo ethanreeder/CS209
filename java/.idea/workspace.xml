@@ -14,8 +14,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/edu/virginia/FullGame.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="10778">
-              <caret line="641" column="16" lean-forward="true" selection-start-line="641" selection-start-column="16" selection-end-line="641" selection-end-column="16" />
+            <state relative-caret-position="357">
+              <caret line="347" column="62" selection-start-line="347" selection-start-column="62" selection-end-line="347" selection-end-column="62" />
             </state>
           </provider>
         </entry>
@@ -32,7 +32,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/edu/virginia/LabFiveGame.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5848">
+            <state relative-caret-position="422">
               <caret line="351" column="76" selection-start-line="348" selection-start-column="8" selection-end-line="351" selection-end-column="76" />
             </state>
           </provider>
@@ -41,8 +41,26 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/edu/virginia/LabFourGame.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="27" column="53" selection-start-line="27" selection-start-column="53" selection-end-line="27" selection-end-column="53" />
+            <state relative-caret-position="141">
+              <caret line="168" column="32" selection-start-line="168" selection-start-column="28" selection-end-line="168" selection-end-column="32" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/edu/virginia/engine/display/DisplayObjectContainer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="68">
+              <caret line="7" column="23" selection-start-line="7" selection-start-column="23" selection-end-line="7" selection-end-column="23" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/edu/virginia/engine/display/DisplayObject.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="39">
+              <caret line="355" column="24" selection-start-line="355" selection-start-column="20" selection-end-line="355" selection-end-column="24" />
             </state>
           </provider>
         </entry>
@@ -58,6 +76,7 @@
       <find>level</find>
       <find>key2</find>
       <find>win</find>
+      <find>jump</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -70,11 +89,11 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="-129" />
-    <option name="y" value="92" />
-    <option name="width" value="1630" />
-    <option name="height" value="1040" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="287" />
+    <option name="y" value="247" />
+    <option name="width" value="978" />
+    <option name="height" value="1039" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -82,7 +101,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -101,15 +119,31 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="virginia" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="java" type="b2602c69:ProjectViewProjectNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="virginia" type="462c0819:PsiDirectoryNode" />
+              <item name="engine" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="java" type="b2602c69:ProjectViewProjectNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="virginia" type="462c0819:PsiDirectoryNode" />
+              <item name="engine" type="462c0819:PsiDirectoryNode" />
+              <item name="display" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
       <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1544333334604" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1544486894444" />
     <property name="restartRequiresConfirmation" value="false" />
   </component>
   <component name="RunDashboard">
@@ -167,8 +201,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.FullGame" />
-        <item itemvalue="Application.LabFiveGame" />
         <item itemvalue="Application.LabFourGame" />
+        <item itemvalue="Application.LabFiveGame" />
       </list>
     </recent_temporary>
   </component>
@@ -186,10 +220,10 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="838" extended-state="7" />
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.23154363" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17181209" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -206,7 +240,7 @@
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="9" />
-      <window_info anchor="bottom" id="Messages" order="10" weight="0.32664755" />
+      <window_info anchor="bottom" id="Messages" order="10" weight="0.32577905" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -218,10 +252,31 @@
     </layout>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/edu/virginia/FullGame.java">
+    <entry file="file://$PROJECT_DIR$/src/edu/virginia/engine/display/DisplayObjectContainer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="10778">
-          <caret line="641" column="16" lean-forward="true" selection-start-line="641" selection-start-column="16" selection-end-line="641" selection-end-column="16" />
+        <state relative-caret-position="68">
+          <caret line="7" column="23" selection-start-line="7" selection-start-column="23" selection-end-line="7" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/edu/virginia/engine/display/DisplayObject.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="39">
+          <caret line="355" column="24" selection-start-line="355" selection-start-column="20" selection-end-line="355" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/edu/virginia/LabFiveGame.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="422">
+          <caret line="351" column="76" selection-start-line="348" selection-start-column="8" selection-end-line="351" selection-end-column="76" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/edu/virginia/LabFourGame.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="141">
+          <caret line="168" column="32" selection-start-line="168" selection-start-column="28" selection-end-line="168" selection-end-column="32" />
         </state>
       </provider>
     </entry>
@@ -232,17 +287,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/edu/virginia/LabFiveGame.java">
+    <entry file="file://$PROJECT_DIR$/src/edu/virginia/FullGame.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5848">
-          <caret line="351" column="76" selection-start-line="348" selection-start-column="8" selection-end-line="351" selection-end-column="76" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/edu/virginia/LabFourGame.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="27" column="53" selection-start-line="27" selection-start-column="53" selection-end-line="27" selection-end-column="53" />
+        <state relative-caret-position="357">
+          <caret line="347" column="62" selection-start-line="347" selection-start-column="62" selection-end-line="347" selection-end-column="62" />
         </state>
       </provider>
     </entry>

@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
@@ -52,7 +53,7 @@ public class FullGame extends Game{
 
     /* Interactable Objects */
 
-    AnimatedSprite mario = new AnimatedSprite("Mario", "Mario.png", new Point(425,275));
+    AnimatedSprite mario = new AnimatedSprite("Brock", "brockD2.png", new Point(425,275));
 
     AnimatedSprite stairs1 = new AnimatedSprite("Stairs1", "stairs1.png", new Point(75,-250));
 
@@ -104,6 +105,10 @@ public class FullGame extends Game{
         super("Lab Five Game", 1000, 800);
 
         /* ##### Level 1 ###### */
+        if (Math.random() > .5){
+            mario.setId("Misty");
+            mario.setImage(mario.readImage("mistyD2.png"));
+        }
 
         mario.setScaleX(getScaleX()*.5);
         mario.setScaleY(getScaleY()*.5);
@@ -320,18 +325,27 @@ public class FullGame extends Game{
         for (int counter = 0; counter < pressedKeys.size(); counter++) {
             /* Logic for Up Arrowkey Press */
             if (pressedKeys.get(counter).equals(KeyEvent.VK_UP)) {
+                if(mario.getId().equals("Brock"))   mario.setImage(mario.readImage("brockU2.png"));
+                else    mario.setImage(mario.readImage("mistyU2.png"));
+
                 collisions.addAll(mario.tryMove(0, Math.round(-5 * mario.getAccelerationYN()), gameObjects));
             }
             /* Logic for Down Arrowkey Press */
             if (pressedKeys.get(counter).equals(KeyEvent.VK_DOWN)) {
+                if(mario.getId().equals("Brock"))   mario.setImage(mario.readImage("brockD2.png"));
+                else    mario.setImage(mario.readImage("mistyD2.png"));
                 collisions.addAll(mario.tryMove(0, Math.round(5 * mario.getAccelerationYP()), gameObjects));
             }
             /* Logic for Left Arrowkey Press */
             if (pressedKeys.get(counter).equals(KeyEvent.VK_LEFT)) {
+                if(mario.getId().equals("Brock"))   mario.setImage(mario.readImage("brockL2.png"));
+                else    mario.setImage(mario.readImage("mistyL2.png"));
                 collisions.addAll(mario.tryMove(Math.round(-5 * mario.getAccelerationXN()), 0, gameObjects));
             }
             /* Logic for Right Arrowkey Press */
             if (pressedKeys.get(counter).equals(KeyEvent.VK_RIGHT)) {
+                if(mario.getId().equals("Brock"))   mario.setImage(mario.readImage("brockR2.png"));
+                else    mario.setImage(mario.readImage("mistyR2.png"));
                 collisions.addAll(mario.tryMove(Math.round(5 * mario.getAccelerationXP()), 0, gameObjects));
             }
 
